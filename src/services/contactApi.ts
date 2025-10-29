@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const contactApi = createApi({
   reducerPath: "contactApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_API_BASE_URL, // e.g., http://localhost:8000
+    baseUrl: import.meta.env.VITE_API_BASE_URL, 
     prepareHeaders: (headers) => {
       // ✅ Remove any leftover authentication headers
       headers.delete("Authorization");

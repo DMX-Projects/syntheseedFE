@@ -44,7 +44,7 @@ const ContactSection = () => {
 
     try {
       const res = await submitContact(formData).unwrap();
-      toast.success(res.message || 'Message sent successfully!');
+      toast.success('Message sent successfully!');
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (err: any) {
       toast.error(err.data?.message || 'Failed to send message!');
