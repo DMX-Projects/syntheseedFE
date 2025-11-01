@@ -1,88 +1,91 @@
-import { useScrollAnimation } from '../hooks/useScrollAnimation';
-import BlogCard from './BlogCard';
+import { Link, useNavigate } from "react-router-dom";
+import { useGetBlogsQuery } from "../services/blogApi";
 
 const BlogSection = () => {
-  const { ref, isVisible } = useScrollAnimation();
+  const { data: blogs = [], isLoading } = useGetBlogsQuery(undefined);
+  const navigate = useNavigate();
 
-  const blogs = [
-    {
-      title: 'The AI Revolution in Innovation',
-      excerpt: 'Discover how artificial intelligence is transforming the way we think about and develop new ideas.',
-      date: 'Oct 20, 2025',
-      category: 'AI & Innovation',
-      image: 'https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=600'
-    },
-    {
-      title: 'From Thought to Action',
-      excerpt: 'Learn how to bridge the gap between having great ideas and actually bringing them to life.',
-      date: 'Oct 15, 2025',
-      category: 'Productivity',
-      image: 'https://images.pexels.com/photos/4164418/pexels-photo-4164418.jpeg?auto=compress&cs=tinysrgb&w=600'
-    },
-    {
-      title: 'The Power of Automated Planning',
-      excerpt: 'Explore how automation is changing strategic planning and making execution faster than ever.',
-      date: 'Oct 10, 2025',
-      category: 'Strategy',
-      image: 'https://images.pexels.com/photos/256381/pexels-photo-256381.jpeg?auto=compress&cs=tinysrgb&w=600'
-    },
-    {
-      title: 'Human-AI Collaboration',
-      excerpt: 'Understanding the synergy between human creativity and artificial intelligence capabilities.',
-      date: 'Oct 5, 2025',
-      category: 'Technology',
-      image: 'https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg?auto=compress&cs=tinysrgb&w=600'
-    },
-    {
-      title: 'Never Lose an Idea Again',
-      excerpt: 'Best practices for capturing, organizing, and developing your innovative thoughts.',
-      date: 'Sep 28, 2025',
-      category: 'Innovation',
-      image: 'https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg?auto=compress&cs=tinysrgb&w=600'
-    },
-    {
-      title: 'The Future of Idea Management',
-      excerpt: 'Where is idea development heading? A look at emerging trends and technologies.',
-      date: 'Sep 22, 2025',
-      category: 'Future Tech',
-      image: 'https://images.pexels.com/photos/3183190/pexels-photo-3183190.jpeg?auto=compress&cs=tinysrgb&w=600'
-    }
-  ];
+  // Limit to latest 6 blogs
+  const recentBlogs = blogs.slice(0, 6);
+
+  const handleReadMore = (slug: string) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    navigate(`/blogs/${slug}`);
+  };
+
+  const handleViewAll = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    navigate("/blogs");
+  };
 
   return (
-    <section id="blog" className="py-12 bg-gradient-to-b from-transparent via-cyan-500/5 to-transparent">
-      <div className="container mx-auto px-6">
-        <div
-          ref={ref}
-          className={`max-w-6xl mx-auto transition-all duration-1000 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}
-        >
-          <div className="text-center mb-16">
-           <p className="text-sm font-semibold tracking-widest text-cyan-500 mb-1">BLOG</p>
-            <h2 className="text-3xl md:text-3xl font-bold text-primary mb-4">
-             <span className="text-gradient">Latest from Syntheseed</span>
-            </h2>
-            <p className="text-xl text-secondary max-w-3xl mx-auto">
-              Ideas on product strategy, go-to-market, and founder operations.
-            </p>
-          </div>
+    <section id="blogs" className="py-20 bg-gradient-to-b from-white to-teal-50">
+      <div className="max-w-7xl mx-auto px-4 text-center">
+        <p className="text-teal-500 font-semibold uppercase tracking-widest mb-2">
+          BLOG
+        </p>
+        <h2 className="text-4xl md:text-5xl font-extrabold text-teal-600 mb-3">
+          Latest from Syntheseed
+        </h2>
+        <p className="text-gray-600 text-lg mb-12">
+          Ideas on product strategy, go-to-market, and founder operations.
+        </p>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogs.map((blog, index) => (
-              <BlogCard
-                key={index}
-                {...blog}
-                delay={index * 100}
-              />
+        {isLoading ? (
+          <p className="text-gray-500 text-lg">Loading blogs...</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {recentBlogs.map((blog) => (
+              <div
+                key={blog.id}
+                className="bg-white rounded-2xl shadow-md hover:shadow-2xl border border-teal-100 transition-all duration-300 transform hover:-translate-y-2 flex flex-col overflow-hidden"
+              >
+                <img
+                  src={blog.image}
+                  alt={blog.title}
+                  className="w-full h-52 object-cover"
+                />
+                <div className="p-6 flex flex-col flex-grow text-left">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="bg-teal-100 text-teal-600 text-xs font-semibold px-3 py-1 rounded-full">
+                      {blog.category || "AI & Innovation"}
+                    </span>
+                    <span className="text-gray-500 text-sm">
+                      {new Date(blog.created_at).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "2-digit",
+                        year: "numeric",
+                      })}
+                    </span>
+                  </div>
+
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2 line-clamp-2">
+                    {blog.title}
+                  </h3>
+
+                  <p className="text-gray-600 text-sm mb-4 flex-grow line-clamp-3">
+                    {blog.summary || "Discover more in this article."}
+                  </p>
+
+                  <button
+                    onClick={() => handleReadMore(blog.slug)}
+                    className="text-teal-600 font-medium hover:text-teal-700 mt-auto flex items-center gap-1"
+                  >
+                    Read More →
+                  </button>
+                </div>
+              </div>
             ))}
           </div>
+        )}
 
-          <div className="text-center mt-12">
-            <button className="btn-secondary">
-              View All Articles
-            </button>
-          </div>
+        <div className="text-center mt-14">
+          <button
+            onClick={handleViewAll}
+            className="inline-block px-8 py-3 bg-teal-600 text-white font-medium rounded-xl hover:bg-teal-700 transition-all"
+          >
+            View All Articles
+          </button>
         </div>
       </div>
     </section>

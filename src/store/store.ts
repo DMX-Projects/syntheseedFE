@@ -1,14 +1,10 @@
-// src/store/store.ts
 import { configureStore } from "@reduxjs/toolkit";
-import { contactApi } from "../services/contactApi";
+import { blogApi } from "../services/blogApi";
 
 export const store = configureStore({
   reducer: {
-    [contactApi.reducerPath]: contactApi.reducer,
+    [blogApi.reducerPath]: blogApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(contactApi.middleware),
+    getDefaultMiddleware().concat(blogApi.middleware),
 });
-
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;

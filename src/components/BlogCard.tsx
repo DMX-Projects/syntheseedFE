@@ -1,4 +1,4 @@
-import { Calendar, ArrowRight } from 'lucide-react';
+import { useNavigate } from "react-router-dom";
 
 interface BlogCardProps {
   title: string;
@@ -6,43 +6,28 @@ interface BlogCardProps {
   date: string;
   category: string;
   image: string;
+  slug: string;
   delay?: number;
 }
 
-const BlogCard = ({ title, excerpt, date, category, image, delay = 0 }: BlogCardProps) => {
+const BlogCard = ({ title, excerpt, date, category, image, slug, delay = 0 }: BlogCardProps) => {
+  const navigate = useNavigate();
+
   return (
     <div
-      className="glass-effect rounded-2xl overflow-hidden hover:scale-105 transition-all duration-300 group"
-      style={{ animationDelay: `${delay}ms` }}
+      className="bg-white rounded-2xl shadow-lg overflow-hidden transition-transform transform hover:-translate-y-1 duration-300"
+      style={{ transitionDelay: `${delay}ms` }}
     >
-      <div className="h-48 relative overflow-hidden">
-        <img
-          src={image}
-          alt={title}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-      </div>
-
+      <img src={image} alt={title} className="w-full h-56 object-cover" />
       <div className="p-6">
-        <div className="flex items-center justify-between mb-4">
-          <span className="px-3 py-1 bg-cyan-500/20 text-cyan-500 text-sm rounded-full">
-            {category}
-          </span>
-          <div className="flex items-center text-sm text-secondary">
-            <Calendar className="w-4 h-4 mr-1" />
-            {date}
-          </div>
-        </div>
-
-        <h3 className="text-xl font-bold text-primary mb-3 group-hover:text-cyan-500 transition-colors duration-300">
-          {title}
-        </h3>
-        <p className="text-secondary leading-relaxed mb-4">{excerpt}</p>
-
-        <button className="flex items-center text-cyan-500 font-medium group-hover:gap-2 transition-all duration-300">
-          Read More
-          <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform duration-300" />
+        <p className="text-sm text-cyan-500 font-medium mb-1">{category}</p>
+        <h3 className="text-xl font-bold mb-2">{title}</h3>
+        <p className="text-gray-600 mb-4">{excerpt}</p>
+        <button
+          onClick={() => navigate(`/blogs/${slug}`)} // ✅ navigates to correct route
+          className="text-cyan-600 hover:text-cyan-800 font-semibold"
+        >
+          Read More →
         </button>
       </div>
     </div>
