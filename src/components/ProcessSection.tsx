@@ -76,7 +76,7 @@ const ProcessSection = () => {
             className="text-center max-w-2xl mx-auto text-base font-medium mb-10"
             style={{ color: isDark ? '#e6e6e6' : '#333' }}
           >
-            Capture and expand ideas, validate with AI and experts, research patents deeply, align go-to-market plans, and build your idea—all in one place.
+            
           </div>
           {/* Steps: responsive grid that stacks on mobile */}
           <div className="w-full max-w-[1460px] mx-auto">
