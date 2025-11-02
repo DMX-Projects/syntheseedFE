@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ;
 
 export const careersApi = createApi({
-  reducerPath: "api/careersApi",
+  reducerPath: "careersApi",
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
     getCareers: builder.query<any[], void>({

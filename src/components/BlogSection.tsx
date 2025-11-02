@@ -32,7 +32,20 @@ const BlogSection = () => {
         </p>
 
         {isLoading ? (
-          <p className="text-secondary text-lg">Loading blogs...</p>
+          // Loading skeletons (match AllBlogsPage)
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="glass-effect rounded-2xl overflow-hidden">
+                <div className="w-full h-52 bg-gray-200/60 dark:bg-white/5 animate-pulse" />
+                <div className="p-6">
+                  <div className="h-4 bg-gray-200/60 dark:bg-white/5 rounded w-3/4 mb-3 animate-pulse"></div>
+                  <div className="h-3 bg-gray-200/60 dark:bg-white/5 rounded w-1/2 mb-4 animate-pulse"></div>
+                  <div className="h-3 bg-gray-200/60 dark:bg-white/5 rounded w-full mb-2 animate-pulse"></div>
+                  <div className="h-3 bg-gray-200/60 dark:bg-white/5 rounded w-5/6 animate-pulse"></div>
+                </div>
+              </div>
+            ))}
+          </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {recentBlogs.map((blog: any) => (
@@ -79,8 +92,8 @@ const BlogSection = () => {
           </div>
         )}
 
-        <div className="text-center mt-14">
-          <button onClick={handleViewAll} className="btn-primary">
+        <div className="mt-14 flex justify-center">
+          <button onClick={handleViewAll} className="btn-primary mx-auto">
             View All Articles
           </button>
         </div>

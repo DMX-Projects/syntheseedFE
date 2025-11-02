@@ -1,35 +1,13 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
 import { Briefcase, MapPin, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useGetCareersQuery } from "../services/careersApi";
 
-interface Career {
-  id: number;
-  title: string;
-  department: string;
-  location: string;
-  job_type: string;
-  description: string;
-}
+// career shape is provided by the API; use `any` locally or add a shared type
 
 export default function AllCareersPage() {
-  const [careers, setCareers] = useState<Career[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data: careers = [], isLoading } = useGetCareersQuery();
   const [tiltedIcon, setTiltedIcon] = useState<number | null>(null);
-
-  useEffect(() => {
-    const fetchCareers = async () => {
-      try {
-        const res = await axios.get<Career[]>("http://127.0.0.1:8050/api/careers/");
-        setCareers(res.data || []);
-      } catch (err) {
-        console.error("Error fetching careers:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCareers();
-  }, []);
 
   const handleCardClick = (id: number) => {
     setTiltedIcon(id);
@@ -37,57 +15,71 @@ export default function AllCareersPage() {
   };
 
   return (
-    <section className="min-h-screen bg-[#e9fbfa] py-16">
+    <section className="min-h-screen bg-bg-primary py-16">
       <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-center text-teal-800 mb-12">
+        <h2 className="text-4xl md:text-5xl font-extrabold text-center text-primary mb-12">
           All Available Careers
         </h2>
 
-        {loading ? (
-          <p className="text-center text-gray-600">Loading careers...</p>
+        {isLoading ? (
+          <div className="grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="glass-effect rounded-2xl p-6 min-h-[260px]">
+                <div className="flex justify-between items-start mb-4">
+                  <div>
+                    <div className="h-6 w-40 bg-gray-200/60 dark:bg-white/5 rounded animate-pulse mb-3"></div>
+                    <div className="h-4 w-28 bg-gray-200/60 dark:bg-white/5 rounded animate-pulse"></div>
+                  </div>
+                  <div className="h-11 w-11 bg-gradient-to-br from-cyan-400 to-teal-500 rounded-lg shadow animate-pulse" />
+                </div>
+                <div className="space-y-2">
+                  <div className="h-3 bg-gray-200/60 dark:bg-white/5 rounded w-full animate-pulse"></div>
+                  <div className="h-3 bg-gray-200/60 dark:bg-white/5 rounded w-5/6 animate-pulse"></div>
+                </div>
+              </div>
+            ))}
+          </div>
         ) : (
           <div className="grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {careers.map((career) => (
               <article
                 key={career.id}
                 onClick={() => handleCardClick(career.id)}
-                className="relative bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer flex flex-col justify-between min-h-[260px]"
+                className="relative glass-effect rounded-2xl p-6 flex flex-col justify-between min-h-[260px] transition-all duration-300 cursor-pointer hover:shadow-2xl"
+                style={{ border: '1px solid rgba(255,255,255,0.04)' }}
               >
                 <div>
                   <div className="flex justify-between items-start">
                     <div>
-                      <h3 className="text-xl md:text-2xl font-semibold text-slate-900 mb-2">
-                        {career.title}
-                      </h3>
-                      <span className="inline-block text-sm font-medium text-teal-700 bg-teal-50 px-3 py-1 rounded-full mb-3">
+                      <h3 className="text-2xl font-bold text-primary mb-2">{career.title}</h3>
+                      <span className="inline-block text-sm font-medium text-cyan-200 bg-cyan-900/30 px-3 py-1 rounded-full mb-3">
                         {career.department}
                       </span>
                     </div>
 
                     {/* Tilt-only icon */}
                     <div
-                      className={`ml-3 p-2 rounded-lg shadow-md transform transition-transform duration-300 
-                        ${tiltedIcon === career.id ? "rotate-12 scale-110" : ""}
-                        bg-gradient-to-br from-cyan-400 to-teal-500 text-white`}
+                      className={`ml-3 p-3 rounded-lg transform transition-transform duration-300 bg-gradient-to-br from-cyan-400 to-teal-500 text-white ${
+                        tiltedIcon === career.id ? "rotate-12 scale-110" : ""
+                      }`}
                       style={{
-                        minWidth: 44,
-                        minHeight: 44,
+                        minWidth: 48,
+                        minHeight: 48,
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
+                        boxShadow: '0 8px 30px rgba(6,182,212,0.25)'
                       }}
                     >
-                      <Briefcase size={20} strokeWidth={1.8} />
+                      <Briefcase size={22} strokeWidth={1.6} />
                     </div>
                   </div>
 
-                  <p className="text-sm text-slate-600 mb-6 line-clamp-3">
-                    {career.description || "No description available."}
-                  </p>
+                  <p className="text-secondary text-sm mb-6 line-clamp-3">{career.description || "No description available."}</p>
                 </div>
 
                 <div className="mt-auto">
-                  <div className="flex items-center justify-between text-sm text-slate-500 mb-4">
+                  <div className="flex items-center justify-between text-sm text-secondary mb-4">
                     <span className="flex items-center gap-2">
                       <MapPin size={16} />
                       <span>{career.location}</span>
@@ -100,11 +92,7 @@ export default function AllCareersPage() {
                   </div>
 
                   {/* View Role Button (fixed at bottom, works properly) */}
-                  <Link
-                    to={`/careers/${career.id}`}
-                    onClick={(e) => e.stopPropagation()}
-                    className="block text-teal-700 font-semibold hover:text-teal-800"
-                  >
+                  <Link to={`/careers/${career.id}`} onClick={(e) => e.stopPropagation()} className="text-teal-300 font-semibold hover:text-teal-200">
                     View Role →
                   </Link>
                 </div>

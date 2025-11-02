@@ -16,8 +16,23 @@ const BlogDetail = () => {
     return (
       <>
         <Header />
-        <div className="min-h-screen flex justify-center items-center text-gray-600 text-lg">
-          Loading blog...
+        <div className="max-w-5xl mx-auto px-6 py-20">
+          {/* Image skeleton */}
+          <div className="mb-8">
+            <div className="w-full rounded-2xl bg-bg-secondary h-56 animate-pulse dark:bg-white/5" />
+          </div>
+
+          {/* Title skeleton */}
+          <div className="h-10 bg-gray-200/60 dark:bg-white/5 rounded w-3/4 animate-pulse mb-4" />
+          <div className="h-4 bg-gray-200/60 dark:bg-white/5 rounded w-1/4 animate-pulse mb-6" />
+
+          {/* Content skeleton */}
+          <div className="space-y-3">
+            <div className="h-4 bg-gray-200/60 dark:bg-white/5 rounded w-full animate-pulse"></div>
+            <div className="h-4 bg-gray-200/60 dark:bg-white/5 rounded w-full animate-pulse"></div>
+            <div className="h-4 bg-gray-200/60 dark:bg-white/5 rounded w-5/6 animate-pulse"></div>
+            <div className="h-4 bg-gray-200/60 dark:bg-white/5 rounded w-4/6 animate-pulse"></div>
+          </div>
         </div>
         <Footer />
       </>
@@ -29,16 +44,9 @@ const BlogDetail = () => {
       <>
         <Header />
         <div className="min-h-screen flex flex-col justify-center items-center text-center px-4">
-          <h2 className="text-3xl font-semibold mb-4 text-gray-800">
-            Blog Not Found
-          </h2>
-          <p className="mb-6 text-gray-500">
-            We couldn’t find this article. Please try again later.
-          </p>
-          <Link
-            to="/blogs"
-            className="px-5 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition"
-          >
+          <h2 className="text-3xl font-semibold mb-4 text-primary">Blog Not Found</h2>
+          <p className="mb-6 text-secondary">We couldn’t find this article. Please try again later.</p>
+          <Link to="/blogs" className="btn-primary">
             Back to Blogs
           </Link>
         </div>
@@ -61,22 +69,13 @@ const BlogDetail = () => {
           </div>
         )}
 
-        <h1 className="text-4xl font-bold mb-6 text-teal-700">{blog.title}</h1>
-        <p className="text-gray-500 mb-6">
-          {new Date(blog.created_at).toLocaleDateString()}
-        </p>
+        <h1 className="text-4xl font-bold mb-6 text-primary">{blog.title}</h1>
+        <p className="text-secondary mb-6">{new Date(blog.created_at).toLocaleDateString()}</p>
 
-        <div
-          className="prose max-w-none text-gray-700 leading-relaxed"
-          dangerouslySetInnerHTML={{ __html: blog.content }}
-        ></div>
+        <div className="prose max-w-none text-primary leading-relaxed" dangerouslySetInnerHTML={{ __html: blog.content }}></div>
 
         <div className="mt-12">
-          <Link
-            to="/blogs"
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="inline-block bg-teal-600 text-white px-6 py-2 rounded-lg hover:bg-teal-700 transition"
-          >
+          <Link to="/blogs" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="btn-primary">
             ← Back to All Blogs
           </Link>
         </div>
