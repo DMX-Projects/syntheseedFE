@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useGetCareerByIdQuery } from "../services/careersApi";
 import { Briefcase, MapPin, Clock, Share2 } from "lucide-react";
 import Header from "../components/Header";
+import { formatPlainTextToHtml, looksLikeHtml } from "../utils/formatText";
 
 
 interface Career {
@@ -106,7 +107,18 @@ const CareerDetail = () => {
       {/* Job Details Section */}
       <div className="bg-bg-secondary rounded-2xl shadow-sm p-6 mt-6">
         <h2 className="text-xl font-semibold text-primary mb-3">Job Responsibilities & Requirements</h2>
-        <div className="text-secondary leading-relaxed text-[15px] space-y-2" dangerouslySetInnerHTML={{ __html: career.details }} />
+        <div className="text-secondary leading-relaxed text-[15px] space-y-2">
+          {/* If API already returned HTML, use it; otherwise format plain text into paragraphs/headings */}
+          {career.details ? (
+            looksLikeHtml(career.details) ? (
+              <div dangerouslySetInnerHTML={{ __html: career.details }} />
+            ) : (
+              <div dangerouslySetInnerHTML={{ __html: formatPlainTextToHtml(career.details) }} />
+            )
+          ) : (
+            <p className="text-secondary">No additional details provided.</p>
+          )}
+        </div>
       </div>
 
      
