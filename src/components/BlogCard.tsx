@@ -3,14 +3,13 @@ import { useNavigate } from "react-router-dom";
 interface BlogCardProps {
   title: string;
   excerpt: string;
-  date: string;
   category: string;
   image: string;
   slug: string;
   delay?: number;
 }
 
-const BlogCard = ({ title, excerpt, date, category, image, slug, delay = 0 }: BlogCardProps) => {
+const BlogCard = ({ title, excerpt, category, image, slug, delay = 0 }: BlogCardProps) => {
   const navigate = useNavigate();
 
   return (
