@@ -3,20 +3,8 @@ import { useParams } from "react-router-dom";
 import { useGetCareerByIdQuery } from "../services/careersApi";
 import { Briefcase, MapPin, Clock, Share2 } from "lucide-react";
 import Header from "../components/Header";
-import { formatPlainTextToHtml, looksLikeHtml } from "../utils/formatText";
-
-
-interface Career {
-  id: number;
-  title: string;
-  department: string;
-  location: string;
-  work_mode: string;
-  job_type: string;
-  description: string;
-  details: string;
-  posted_on: string;
-}
+import { toSafeRichText } from "../utils/formatText";
+import type { Career } from "../types/content";
 
 const CareerDetail = () => {
   const { id } = useParams();
@@ -92,7 +80,14 @@ const CareerDetail = () => {
       </div>
 
       {/* Description Section */}
-      <p className="mt-4 text-secondary leading-relaxed text-[15px]">{career.description}</p>
+      {career.description ? (
+        <div
+          className="mt-4 text-secondary leading-relaxed text-[15px] space-y-3"
+          dangerouslySetInnerHTML={{ __html: toSafeRichText(career.description) }}
+        />
+      ) : (
+        <p className="mt-4 text-secondary leading-relaxed text-[15px]">No description available.</p>
+      )}
 
       {/* Share Button */}
       <div className="flex justify-end mt-3">
@@ -107,14 +102,9 @@ const CareerDetail = () => {
       {/* Job Details Section */}
       <div className="bg-bg-secondary rounded-2xl shadow-sm p-6 mt-6">
         <h2 className="text-xl font-semibold text-primary mb-3">Job Responsibilities & Requirements</h2>
-        <div className="text-secondary leading-relaxed text-[15px] space-y-2">
-          {/* If API already returned HTML, use it; otherwise format plain text into paragraphs/headings */}
+        <div className="text-secondary leading-relaxed text-[15px] space-y-3">
           {career.details ? (
-            looksLikeHtml(career.details) ? (
-              <div dangerouslySetInnerHTML={{ __html: career.details }} />
-            ) : (
-              <div dangerouslySetInnerHTML={{ __html: formatPlainTextToHtml(career.details) }} />
-            )
+            <div dangerouslySetInnerHTML={{ __html: toSafeRichText(career.details) }} />
           ) : (
             <p className="text-secondary">No additional details provided.</p>
           )}

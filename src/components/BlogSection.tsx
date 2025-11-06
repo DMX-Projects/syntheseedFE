@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useGetBlogsQuery } from "../services/blogApi";
+import { stripToPlainText } from "../utils/formatText";
+import type { Blog } from "../types/content";
 
 const BlogSection = () => {
   const { data: blogs = [], isLoading } = useGetBlogsQuery(undefined);
@@ -48,7 +50,7 @@ const BlogSection = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {recentBlogs.map((blog: any) => (
+            {recentBlogs.map((blog: Blog) => (
               <div
                 key={blog.id}
                 className="bg-bg-secondary rounded-2xl shadow-md hover:shadow-2xl border border-teal-100 transition-all duration-300 transform hover:-translate-y-2 flex flex-col overflow-hidden"
@@ -77,7 +79,7 @@ const BlogSection = () => {
                   </h3>
 
                   <p className="text-secondary text-sm mb-4 flex-grow line-clamp-3">
-                    {blog.summary || "Discover more in this article."}
+                    {stripToPlainText(blog.summary) || "Discover more in this article."}
                   </p>
 
                   <button

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Briefcase, MapPin, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useGetCareersQuery } from "../services/careersApi";
+import { stripToPlainText } from "../utils/formatText";
+import type { Career } from "../types/content";
 
 // career shape is provided by the API; use `any` locally or add a shared type
 
@@ -41,7 +43,7 @@ export default function AllCareersPage() {
           </div>
         ) : (
           <div className="grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {careers.map((career) => (
+            {careers.map((career: Career) => (
               <article
                 key={career.id}
                 onClick={() => handleCardClick(career.id)}
@@ -75,7 +77,9 @@ export default function AllCareersPage() {
                     </div>
                   </div>
 
-                  <p className="text-secondary text-sm mb-6 line-clamp-3">{career.description || "No description available."}</p>
+                  <p className="text-secondary text-sm mb-6 line-clamp-3">
+                    {stripToPlainText(career.description) || "No description available."}
+                  </p>
                 </div>
 
                 <div className="mt-auto">

@@ -3,11 +3,13 @@ import { useEffect } from "react";
 import { useGetBlogDetailQuery } from "../services/blogApi";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { formatPlainTextToHtml, looksLikeHtml } from "../utils/formatText";
+import { toSafeRichText } from "../utils/formatText";
 
 const BlogDetail = () => {
   const { slug } = useParams<{ slug: string }>();
-  const { data: blog, isLoading, isError } = useGetBlogDetailQuery(slug);
+  const { data: blog, isLoading, isError } = useGetBlogDetailQuery(slug ?? "", {
+    skip: !slug,
+  });
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -73,17 +75,14 @@ const BlogDetail = () => {
         <h1 className="text-4xl font-bold mb-6 text-primary">{blog.title}</h1>
         <p className="text-secondary mb-6">{new Date(blog.created_at).toLocaleDateString()}</p>
 
-        <div className="prose max-w-none text-primary leading-relaxed">
-          {blog.content ? (
-            looksLikeHtml(blog.content) ? (
-              <div dangerouslySetInnerHTML={{ __html: blog.content }} />
-            ) : (
-              <div dangerouslySetInnerHTML={{ __html: formatPlainTextToHtml(blog.content) }} />
-            )
-          ) : (
-            <p className="text-secondary">No content available.</p>
-          )}
-        </div>
+        {blog.content ? (
+          <div
+            className="prose max-w-none text-primary leading-relaxed"
+            dangerouslySetInnerHTML={{ __html: toSafeRichText(blog.content) }}
+          />
+        ) : (
+          <p className="text-secondary">No content available.</p>
+        )}
 
         <div className="mt-12">
           <Link to="/blogs" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="btn-primary">

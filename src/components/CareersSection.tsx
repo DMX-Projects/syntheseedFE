@@ -1,16 +1,8 @@
 import { Link } from "react-router-dom";
 import { Briefcase, MapPin, Clock } from "lucide-react";
 import { useGetCareersQuery } from "../services/careersApi";
-
-interface Career {
-  id: number;
-  title: string;
-  department: string;
-  location: string;
-  work_mode: string;
-  job_type: string;
-  description: string;
-}
+import { stripToPlainText } from "../utils/formatText";
+import type { Career } from "../types/content";
 
 export default function CareersSection() {
   const { data: careersData = [], isLoading } = useGetCareersQuery();
@@ -72,7 +64,7 @@ export default function CareersSection() {
                   </span>
 
                   <p className="text-gray-400 text-sm leading-relaxed line-clamp-4 flex-grow">
-                    {career.description}
+                    {stripToPlainText(career.description) || "No description available."}
                   </p>
                 </div>
 

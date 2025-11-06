@@ -1,6 +1,8 @@
 // src/components/CareerList.tsx
 import { Link } from "react-router-dom";
 import { useGetCareersQuery } from "../services/careersApi";
+import { stripToPlainText } from "../utils/formatText";
+import type { Career } from "../types/content";
 
 const CareerList = () => {
   const { data: careers = [], isLoading } = useGetCareersQuery();
@@ -11,7 +13,7 @@ const CareerList = () => {
     <div className="max-w-4xl mx-auto py-10">
       <h1 className="text-3xl font-bold mb-6 text-center text-primary">Open Positions</h1>
       <div className="grid gap-6">
-        {careers.map((career: any) => (
+        {careers.map((career: Career) => (
           <Link
             key={career.id}
             to={`/careers/${career.id}`}
@@ -19,7 +21,7 @@ const CareerList = () => {
           >
             <h2 className="text-xl font-semibold">{career.title}</h2>
             <p className="text-secondary mt-2">
-              {career.short_description || "No description available"}
+              {stripToPlainText(career.short_description || career.description) || "No description available"}
             </p>
           </Link>
         ))}
