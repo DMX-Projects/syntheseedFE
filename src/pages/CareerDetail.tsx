@@ -3,23 +3,21 @@ import { useParams } from "react-router-dom";
 import { useGetCareerByIdQuery } from "../services/careersApi";
 import { Briefcase, MapPin, Clock, Share2 } from "lucide-react";
 import Header from "../components/Header";
-<<<<<<< HEAD
 import Footer from "../components/Footer";
-=======
->>>>>>> 34e22e8c6e4c81178e7abef78c43c5cbc4f18ab0
 import { toSafeRichText } from "../utils/formatText";
 import type { Career } from "../types/content";
 
 const CareerDetail = () => {
   const { id } = useParams();
-<<<<<<< HEAD
 
+  // use RTK Query hook
   const { data, isLoading, isError } = useGetCareerByIdQuery(id ?? "", {
     skip: !id,
   });
 
   const career: Career | undefined = data;
 
+  // Error UI
   if (isError)
     return (
       <>
@@ -29,24 +27,11 @@ const CareerDetail = () => {
         </div>
         <Footer />
       </>
-=======
-  // use RTK Query hook for career details (cached, consistent with other APIs)
-  const { data: careerData, isLoading, isError } = useGetCareerByIdQuery(id ?? '', {
-    skip: !id,
-  });
-
-  // keep same variable name for existing JSX
-  const career = careerData as Career | undefined;
-
-  if (isError)
-    return (
-      <div className="text-center text-red-600 py-16 text-lg">Unable to load career details. Please try again.</div>
->>>>>>> 34e22e8c6e4c81178e7abef78c43c5cbc4f18ab0
     );
 
+  // Loading UI (Skeleton)
   if (isLoading || !career)
     return (
-<<<<<<< HEAD
       <>
         <Header />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 mb-16">
@@ -67,7 +52,7 @@ const CareerDetail = () => {
             <div className="h-4 bg-gray-200/60 dark:bg-white/5 rounded w-5/6 animate-pulse"></div>
           </div>
 
-          {/* Share button skeleton */}
+          {/* Share skeleton */}
           <div className="flex justify-end mt-4">
             <div className="h-9 w-24 bg-gray-200/60 dark:bg-white/5 rounded-md animate-pulse"></div>
           </div>
@@ -94,7 +79,9 @@ const CareerDetail = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 mb-16">
         {/* Header Section */}
         <div className="border-b pb-4">
-          <h1 className="text-3xl font-bold text-primary mb-2">{career.title}</h1>
+          <h1 className="text-3xl font-bold text-primary mb-2">
+            {career.title}
+          </h1>
 
           <div className="flex flex-wrap items-center gap-3 text-secondary text-sm">
             <span className="flex items-center gap-1">
@@ -105,7 +92,9 @@ const CareerDetail = () => {
             </span>
             <span className="flex items-center gap-1">
               <Clock size={16} />{" "}
-              <span>{career.job_type} • {career.work_mode}</span>
+              <span>
+                {career.job_type} • {career.work_mode}
+              </span>
             </span>
           </div>
         </div>
@@ -115,7 +104,9 @@ const CareerDetail = () => {
           {career.description ? (
             <div
               className="text-secondary leading-relaxed text-[15px] space-y-3 ck-content"
-              dangerouslySetInnerHTML={{ __html: toSafeRichText(career.description) }}
+              dangerouslySetInnerHTML={{
+                __html: toSafeRichText(career.description),
+              }}
             />
           ) : (
             <p className="text-secondary">No description available.</p>
@@ -147,112 +138,22 @@ const CareerDetail = () => {
           {career.details ? (
             <div
               className="text-secondary leading-relaxed text-[15px] space-y-3 ck-content"
-              dangerouslySetInnerHTML={{ __html: toSafeRichText(career.details) }}
+              dangerouslySetInnerHTML={{
+                __html: toSafeRichText(career.details),
+              }}
             />
-=======
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 mb-16">
-        {/* Skeleton header */}
-        <div className="border-b pb-4">
-          <div className="h-8 bg-gray-200/60 dark:bg-white/5 rounded w-1/2 animate-pulse mb-3"></div>
-          <div className="flex flex-wrap items-center gap-3">
-            <div className="h-4 bg-gray-200/60 dark:bg-white/5 rounded w-36 animate-pulse"></div>
-            <div className="h-4 bg-gray-200/60 dark:bg-white/5 rounded w-28 animate-pulse"></div>
-            <div className="h-4 bg-gray-200/60 dark:bg-white/5 rounded w-32 animate-pulse"></div>
-          </div>
-        </div>
-
-        {/* Description skeleton */}
-        <div className="mt-4 space-y-3">
-          <div className="h-4 bg-gray-200/60 dark:bg-white/5 rounded w-full animate-pulse"></div>
-          <div className="h-4 bg-gray-200/60 dark:bg-white/5 rounded w-full animate-pulse"></div>
-          <div className="h-4 bg-gray-200/60 dark:bg-white/5 rounded w-5/6 animate-pulse"></div>
-        </div>
-
-        {/* Share button skeleton */}
-        <div className="flex justify-end mt-4">
-          <div className="h-9 w-24 bg-gray-200/60 dark:bg-white/5 rounded-md animate-pulse"></div>
-        </div>
-
-        {/* Job details skeleton */}
-        <div className="bg-bg-secondary rounded-2xl shadow-sm p-6 mt-6">
-          <div className="h-6 bg-gray-200/60 dark:bg-white/5 rounded w-1/3 mb-4 animate-pulse"></div>
-          <div className="space-y-3">
-            <div className="h-3 bg-gray-200/60 dark:bg-white/5 rounded w-full animate-pulse"></div>
-            <div className="h-3 bg-gray-200/60 dark:bg-white/5 rounded w-full animate-pulse"></div>
-            <div className="h-3 bg-gray-200/60 dark:bg-white/5 rounded w-5/6 animate-pulse"></div>
-            <div className="h-3 bg-gray-200/60 dark:bg-white/5 rounded w-3/4 animate-pulse"></div>
-          </div>
-        </div>
-      </div>
-    );
-
-  return (
-    
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 mb-16">
-      <Header />
-      {/* Header Section */}
-      <div className="border-b pb-4">
-        <h1 className="text-3xl font-bold text-primary mb-2">{career.title}</h1>
-        <div className="flex flex-wrap items-center gap-3 text-secondary text-sm">
-          <span className="flex items-center gap-1">
-            <Briefcase size={16} /> <span className="ml-1">{career.department}</span>
-          </span>
-          <span className="flex items-center gap-1">
-            <MapPin size={16} /> <span className="ml-1">{career.location}</span>
-          </span>
-          <span className="flex items-center gap-1">
-            <Clock size={16} /> <span className="ml-1">{career.job_type} • {career.work_mode}</span>
-          </span>
-        </div>
-      </div>
-
-      {/* Description Section */}
-      {career.description ? (
-        <div
-          className="mt-4 text-secondary leading-relaxed text-[15px] space-y-3"
-          dangerouslySetInnerHTML={{ __html: toSafeRichText(career.description) }}
-        />
-      ) : (
-        <p className="mt-4 text-secondary leading-relaxed text-[15px]">No description available.</p>
-      )}
-
-      {/* Share Button */}
-      <div className="flex justify-end mt-3">
-        <button
-          onClick={() => navigator.share?.({ title: career.title, text: career.description, url: window.location.href })}
-          className="btn-primary inline-flex items-center gap-2 px-3 py-2"
-        >
-          <Share2 size={16} /> Share
-        </button>
-      </div>
-
-      {/* Job Details Section */}
-      <div className="bg-bg-secondary rounded-2xl shadow-sm p-6 mt-6">
-        <h2 className="text-xl font-semibold text-primary mb-3">Job Responsibilities & Requirements</h2>
-        <div className="text-secondary leading-relaxed text-[15px] space-y-3">
-          {career.details ? (
-            <div dangerouslySetInnerHTML={{ __html: toSafeRichText(career.details) }} />
->>>>>>> 34e22e8c6e4c81178e7abef78c43c5cbc4f18ab0
           ) : (
             <p className="text-secondary">No additional details provided.</p>
           )}
         </div>
       </div>
 
-<<<<<<< HEAD
       <Footer />
     </>
   );
 };
 
-// Helper to remove HTML for share text
+// Remove HTML from share text
 const stripHTML = (html: string) => html.replace(/<[^>]+>/g, "");
 
-=======
-     
-    </div>
-  );
-};
-
->>>>>>> 34e22e8c6e4c81178e7abef78c43c5cbc4f18ab0
 export default CareerDetail;

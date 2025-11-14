@@ -1,9 +1,6 @@
 import DOMPurify from "dompurify";
 
-// Small formatter to convert plain text (with CRLFs and simple markdown-like headings)
-// into HTML for rendering in details pages. This is intentionally small —
-// it handles CRLF -> paragraphs, simple *wrapped* headings, and a few known
-// section header keywords. Sanitization is handled separately.
+// Detect if string already contains HTML
 export function looksLikeHtml(s: string | undefined) {
   if (!s) return false;
   return /<[^>]+>/.test(s);
@@ -80,16 +77,13 @@ const RICH_TEXT_ALLOWED_ATTR = [
   "class",
 ];
 
+// Convert plain text → HTML (fallback when CKEditor is not used)
 export function formatPlainTextToHtml(raw: string | undefined): string {
   if (!raw) return "";
 
-  // If it already contains HTML-ish content, return as-is to avoid double-escaping.
   if (looksLikeHtml(raw)) return raw;
 
-  // Normalize newlines and trim
   const normalized = raw.replace(/\r\n/g, "\n").trim();
-
-  // Split into paragraphs on empty lines
   const paragraphs = normalized.split(/\n\s*\n/);
 
   const out: string[] = [];
@@ -97,32 +91,41 @@ export function formatPlainTextToHtml(raw: string | undefined): string {
   for (const paragraph of paragraphs) {
     const trimmed = paragraph.trim();
 
-    // Heading wrapped in *asterisks* (e.g. *Details*)
+    // *Heading* Markdown-like
     const asteriskMatch = trimmed.match(/^\*(.+)\*$/);
     if (asteriskMatch) {
       const inner = escapeHtml(asteriskMatch[1].trim());
-      out.push(`<h3 class="text-lg font-semibold text-primary mb-2">${inner}</h3>`);
+      out.push(
+        `<h3 class="text-lg font-semibold text-primary mb-2">${inner}</h3>`
+      );
       continue;
     }
 
-    // Known short headers (case-insensitive)
-    const lower = trimmed.toLowerCase();
-    if (KNOWN_HEADERS.has(lower)) {
-      out.push(`<h4 class="text-md font-semibold text-primary mt-4 mb-2">${escapeHtml(trimmed)}</h4>`);
+    // Matches known section headers
+    if (KNOWN_HEADERS.has(trimmed.toLowerCase())) {
+      out.push(
+        `<h4 class="text-md font-semibold text-primary mt-4 mb-2">${escapeHtml(
+          trimmed
+        )}</h4>`
+      );
       continue;
     }
 
-    // Otherwise, convert single newlines to <br/> and wrap in <p>
+    // Normal paragraph with <br/>
     const withBreaks = escapeHtml(trimmed).replace(/\n/g, "<br/>");
-    out.push(`<p class="text-secondary leading-relaxed text-[15px] mb-3">${withBreaks}</p>`);
+    out.push(
+      `<p class="text-secondary leading-relaxed text-[15px] mb-3">${withBreaks}</p>`
+    );
   }
 
   return out.join("\n");
 }
 
+// Sanitize CKEditor or fallback HTML
 export function toSafeRichText(raw: string | undefined): string {
   if (!raw) return "";
   const html = looksLikeHtml(raw) ? raw : formatPlainTextToHtml(raw);
+
   return DOMPurify.sanitize(html, {
     ALLOWED_TAGS: RICH_TEXT_ALLOWED_TAGS,
     ALLOWED_ATTR: RICH_TEXT_ALLOWED_ATTR,
@@ -130,11 +133,11 @@ export function toSafeRichText(raw: string | undefined): string {
   });
 }
 
+// Remove all HTML → plain text preview
 export function stripToPlainText(raw: string | undefined): string {
   if (!raw) return "";
-  if (!looksLikeHtml(raw)) {
-    return raw.trim();
-  }
+
+  if (!looksLikeHtml(raw)) return raw.trim();
 
   const sanitized = DOMPurify.sanitize(raw, {
     ALLOWED_TAGS: [],
@@ -142,8 +145,4 @@ export function stripToPlainText(raw: string | undefined): string {
   });
 
   return sanitized.replace(/\s+/g, " ").trim();
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 34e22e8c6e4c81178e7abef78c43c5cbc4f18ab0

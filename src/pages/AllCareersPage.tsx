@@ -5,11 +5,8 @@ import { useGetCareersQuery } from "../services/careersApi";
 import { stripToPlainText } from "../utils/formatText";
 import type { Career } from "../types/content";
 
-<<<<<<< HEAD
-=======
 // career shape is provided by the API; use `any` locally or add a shared type
 
->>>>>>> 34e22e8c6e4c81178e7abef78c43c5cbc4f18ab0
 export default function AllCareersPage() {
   const { data: careers = [], isLoading } = useGetCareersQuery();
   const [tiltedIcon, setTiltedIcon] = useState<number | null>(null);
@@ -51,31 +48,20 @@ export default function AllCareersPage() {
                 key={career.id}
                 onClick={() => handleCardClick(career.id)}
                 className="relative glass-effect rounded-2xl p-6 flex flex-col justify-between min-h-[260px] transition-all duration-300 cursor-pointer hover:shadow-2xl"
-<<<<<<< HEAD
                 style={{ border: "1px solid rgba(255,255,255,0.04)" }}
-=======
-                style={{ border: '1px solid rgba(255,255,255,0.04)' }}
->>>>>>> 34e22e8c6e4c81178e7abef78c43c5cbc4f18ab0
               >
                 <div>
                   <div className="flex justify-between items-start">
                     <div>
-<<<<<<< HEAD
                       <h3 className="text-2xl font-bold text-primary mb-2">
                         {career.title}
                       </h3>
-=======
-                      <h3 className="text-2xl font-bold text-primary mb-2">{career.title}</h3>
->>>>>>> 34e22e8c6e4c81178e7abef78c43c5cbc4f18ab0
                       <span className="inline-block text-sm font-medium text-cyan-200 bg-cyan-900/30 px-3 py-1 rounded-full mb-3">
                         {career.department}
                       </span>
                     </div>
 
-<<<<<<< HEAD
-=======
                     {/* Tilt-only icon */}
->>>>>>> 34e22e8c6e4c81178e7abef78c43c5cbc4f18ab0
                     <div
                       className={`ml-3 p-3 rounded-lg transform transition-transform duration-300 bg-gradient-to-br from-cyan-400 to-teal-500 text-white ${
                         tiltedIcon === career.id ? "rotate-12 scale-110" : ""
@@ -86,11 +72,7 @@ export default function AllCareersPage() {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-<<<<<<< HEAD
                         boxShadow: "0 8px 30px rgba(6,182,212,0.25)",
-=======
-                        boxShadow: '0 8px 30px rgba(6,182,212,0.25)'
->>>>>>> 34e22e8c6e4c81178e7abef78c43c5cbc4f18ab0
                       }}
                     >
                       <Briefcase size={22} strokeWidth={1.6} />
@@ -98,12 +80,8 @@ export default function AllCareersPage() {
                   </div>
 
                   <p className="text-secondary text-sm mb-6 line-clamp-3">
-<<<<<<< HEAD
                     {stripToPlainText(career.description) ||
                       "No description available."}
-=======
-                    {stripToPlainText(career.description) || "No description available."}
->>>>>>> 34e22e8c6e4c81178e7abef78c43c5cbc4f18ab0
                   </p>
                 </div>
 
@@ -120,16 +98,12 @@ export default function AllCareersPage() {
                     </span>
                   </div>
 
-<<<<<<< HEAD
+                  {/* View Role Button */}
                   <Link
                     to={`/careers/${career.id}`}
                     onClick={(e) => e.stopPropagation()}
                     className="text-teal-300 font-semibold hover:text-teal-200"
                   >
-=======
-                  {/* View Role Button (fixed at bottom, works properly) */}
-                  <Link to={`/careers/${career.id}`} onClick={(e) => e.stopPropagation()} className="text-teal-300 font-semibold hover:text-teal-200">
->>>>>>> 34e22e8c6e4c81178e7abef78c43c5cbc4f18ab0
                     View Role →
                   </Link>
                 </div>
