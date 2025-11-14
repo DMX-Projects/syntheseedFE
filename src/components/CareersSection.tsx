@@ -9,97 +9,98 @@ export default function CareersSection() {
   const careers = (careersData as Career[]).slice(0, 6);
 
   return (
-    <section id="careers" className="py-20 bg-[#0B1120]">
-      <div className="max-w-7xl mx-auto px-6 text-center">
-        <h2 className="text-4xl font-extrabold text-white mb-4">
+    <section id="careers" className="py-20 bg-bg-primary">
+      <div className="max-w-7xl mx-auto px-4 text-center">
+        <p className="text-teal-500 font-semibold uppercase tracking-widest mb-2">
+          CAREERS
+        </p>
+        <h2 className="text-4xl md:text-5xl font-extrabold text-primary mb-3">
           Join Our Team
         </h2>
-        <p className="text-gray-400 mb-12 text-lg">
+        <p className="text-secondary text-lg mb-12">
           Build the future of innovation with us — explore our open roles.
         </p>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-center">
-          {isLoading ? (
-            // Skeleton placeholders (match AllCareersPage loaders)
-            Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="glass-effect rounded-2xl p-6 min-h-[260px]">
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <div className="h-6 w-40 bg-gray-200/60 dark:bg-white/5 rounded animate-pulse mb-3"></div>
-                    <div className="h-4 w-28 bg-gray-200/60 dark:bg-white/5 rounded animate-pulse"></div>
+        {isLoading ? (
+          // Loading skeletons
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="glass-effect rounded-2xl overflow-hidden">
+                <div className="p-6">
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="flex-1">
+                      <div className="h-6 bg-gray-200/60 dark:bg-white/5 rounded w-3/4 mb-3 animate-pulse"></div>
+                      <div className="h-4 bg-gray-200/60 dark:bg-white/5 rounded w-1/2 mb-4 animate-pulse"></div>
+                    </div>
+                    <div className="h-12 w-12 bg-gray-200/60 dark:bg-white/5 rounded-xl animate-pulse" />
                   </div>
-                  <div className="h-11 w-11 bg-gradient-to-br from-cyan-400 to-teal-500 rounded-lg shadow animate-pulse" />
-                </div>
-                <div className="space-y-2">
-                  <div className="h-3 bg-gray-200/60 dark:bg-white/5 rounded w-full animate-pulse"></div>
-                  <div className="h-3 bg-gray-200/60 dark:bg-white/5 rounded w-5/6 animate-pulse"></div>
+                  <div className="h-3 bg-gray-200/60 dark:bg-white/5 rounded w-full mb-2 animate-pulse"></div>
+                  <div className="h-3 bg-gray-200/60 dark:bg-white/5 rounded w-5/6 mb-4 animate-pulse"></div>
+                  <div className="flex gap-4 mb-4">
+                    <div className="h-3 bg-gray-200/60 dark:bg-white/5 rounded w-20 animate-pulse"></div>
+                    <div className="h-3 bg-gray-200/60 dark:bg-white/5 rounded w-20 animate-pulse"></div>
+                  </div>
                 </div>
               </div>
-            ))
-          ) : (
-            careers.map((career: Career) => (
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {careers.map((career: Career) => (
               <div
                 key={career.id}
-                className="relative bg-[#111827] border border-gray-800/60 rounded-2xl p-8 flex flex-col justify-between 
-                  min-h-[260px] max-w-[380px] mx-auto shadow-lg transition-all duration-300 hover:-translate-y-2 
-                  hover:shadow-[0_0_30px_rgba(34,211,238,0.25)] hover:border-cyan-500/40"
+                className="bg-bg-secondary rounded-2xl shadow-md hover:shadow-2xl border border-teal-100 transition-all duration-300 transform hover:-translate-y-2 flex flex-col overflow-hidden"
               >
-                {/* Glowing cyan square icon */}
-                <div
-                  className="absolute top-5 right-5 bg-gradient-to-tr from-cyan-400 to-teal-500 
-                    p-4 rounded-xl text-white shadow-lg shadow-cyan-500/20"
-                >
-                  <Briefcase size={22} />
-                </div>
-
-                <div className="flex flex-col items-start text-left">
-                  <div className="flex items-center justify-between w-full mb-3">
-                    <h3 className="text-xl font-bold text-white leading-snug">
-                      {career.title}
-                    </h3>
+                <div className="p-6 flex flex-col flex-grow text-left">
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold text-primary mb-3 leading-snug">
+                        {career.title}
+                      </h3>
+                      <span className="inline-block bg-teal-100 text-teal-600 text-xs font-semibold px-3 py-1 rounded-full">
+                        {career.department}
+                      </span>
+                    </div>
+                    <div className="bg-gradient-to-tr from-cyan-400 to-teal-500 p-3 rounded-xl text-white shadow-lg">
+                      <Briefcase size={20} />
+                    </div>
                   </div>
 
-                  <span className="inline-block bg-cyan-900/40 text-cyan-300 text-sm px-3 py-1 rounded-full mb-4 font-medium">
-                    {career.department}
-                  </span>
-
-                  <p className="text-gray-400 text-sm leading-relaxed line-clamp-4 flex-grow">
+                  <p className="text-secondary text-sm mb-4 flex-grow line-clamp-3 leading-relaxed">
                     {stripToPlainText(career.description) || "No description available."}
                   </p>
-                </div>
 
-                <div className="mt-5 text-gray-400 text-sm flex items-center flex-wrap gap-4">
-                  <span className="flex items-center gap-1">
-                    <MapPin size={14} className="text-cyan-400" />
-                    {career.location}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Clock size={14} className="text-cyan-400" />
-                    {career.job_type}
-                  </span>
-                </div>
+                  <div className="text-secondary text-sm flex items-center flex-wrap gap-4 mb-4">
+                    <span className="flex items-center gap-1">
+                      <MapPin size={14} className="text-teal-500" />
+                      {career.location}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Clock size={14} className="text-teal-500" />
+                      {career.job_type}
+                    </span>
+                  </div>
 
-                <div className="mt-5 text-left">
                   <Link
                     to={`/careers/${career.id}`}
                     onClick={() =>
                       window.scrollTo({ top: 0, behavior: "smooth" })
                     }
-                    className="inline-flex items-center gap-2 text-cyan-400 font-semibold hover:text-teal-400 transition"
+                    className="text-teal-600 font-medium hover:text-teal-700 mt-auto flex items-center gap-1"
                   >
                     View Role →
                   </Link>
                 </div>
               </div>
-            ))
-          )}
-        </div>
+            ))}
+          </div>
+        )}
 
         <div className="mt-14 flex justify-center">
           <Link
             to="/careers/all"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="bg-gradient-to-r from-cyan-500 to-teal-500 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-cyan-500/30 transition"
+            className="btn-primary mx-auto"
           >
             View All Careers
           </Link>
