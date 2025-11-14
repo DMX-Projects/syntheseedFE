@@ -1,4 +1,3 @@
-import React from 'react';
 import { Target, Lightbulb, Rocket } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { useTheme } from '../contexts/ThemeContext';
@@ -65,7 +64,7 @@ const InnovationCanvasGrid = () => {
   );
 };
 
-const getCardClasses = (isDark) =>
+const getCardClasses = (isDark: boolean) =>
   isDark
     ? 'bg-[#23283e] border-gray-700 border shadow-lg'
     : 'bg-white/95 border-gray-200 border shadow-xl';

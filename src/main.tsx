@@ -6,13 +6,16 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 import { Toaster } from "react-hot-toast";
+import { BrowserRouter } from "react-router-dom";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
       <ThemeProvider>
-        <App />
-        <Toaster position="top-right" />
+        <BrowserRouter>
+          <App />
+          <Toaster position="top-right" />
+        </BrowserRouter>
       </ThemeProvider>
     </Provider>
   </StrictMode>

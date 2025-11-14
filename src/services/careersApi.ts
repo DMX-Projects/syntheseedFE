@@ -24,4 +24,8 @@ export const careersApi = createApi({
   }),
 });
 
+<<<<<<< HEAD
 export const { useGetCareersQuery, useGetCareerByIdQuery, useApplyForCareerMutation } = careersApi;
+=======
+export const { useGetCareersQuery, useGetCareerByIdQuery, useApplyForCareerMutation } = careersApi;
+>>>>>>> 34e22e8c6e4c81178e7abef78c43c5cbc4f18ab0

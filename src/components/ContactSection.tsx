@@ -43,11 +43,12 @@ const ContactSection = () => {
     e.preventDefault();
 
     try {
-      const res = await submitContact(formData).unwrap();
+      await submitContact(formData).unwrap();
       toast.success('Message sent successfully!');
       setFormData({ name: '', email: '', subject: '', message: '' });
-    } catch (err: any) {
-      toast.error(err.data?.message || 'Failed to send message!');
+    } catch (err) {
+      const message = (err as { data?: { message?: string } })?.data?.message;
+      toast.error(message || 'Failed to send message!');
     }
   };
 

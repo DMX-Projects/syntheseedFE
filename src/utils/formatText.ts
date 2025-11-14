@@ -142,4 +142,8 @@ export function stripToPlainText(raw: string | undefined): string {
   });
 
   return sanitized.replace(/\s+/g, " ").trim();
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 34e22e8c6e4c81178e7abef78c43c5cbc4f18ab0

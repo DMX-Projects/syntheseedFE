@@ -57,6 +57,22 @@ const Header = () => {
     setIsMobileMenuOpen(false);
   };
 
+  // smart navigation (works from any page)
+  const handleNavClick = (href: string) => {
+    if (href.startsWith("#")) {
+      // if already on homepage
+      if (location.pathname === "/") {
+        scrollToSection(href);
+      } else {
+        // navigate home and scroll after load
+        navigate("/");
+        setTimeout(() => scrollToSection(href), 400);
+      }
+    } else {
+      navigate(href);
+    }
+  };
+
   return (
     <header className="fixed top-3 left-0 right-0 z-50">
       <div className="px-3 sm:px-4">
@@ -66,7 +82,7 @@ const Header = () => {
               ? 'backdrop-blur-lg bg-black/35 shadow-lg border-b border-white/10 py-5'
               : 'backdrop-blur-xl bg-black/30 shadow-md py-5'
           } px-4 sm:px-6`}
-          style={{ WebkitBackdropFilter: 'blur(16px)' }}
+          style={{ WebkitBackdropFilter: "blur(16px)" }}
         >
           <div className="flex items-center justify-between w-full gap-3">
             {/* Logo */}
@@ -138,15 +154,15 @@ const Header = () => {
           </div>
         </div>
 
+
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <nav className="md:hidden mt-3 bg-black/35 backdrop-blur-xl rounded-xl p-4 animate-fade-in border border-white/15 flex flex-col gap-2">
             {navItems.map((item) => (
               <button
                 key={item.href}
-                onClick={() => scrollToSection(item.href)}
+                onClick={() => handleNavClick(item.href)}
                 className="w-full text-left py-3 px-4 text-gray-100 hover:text-cyan-400 hover:bg-white/10 rounded-lg font-medium transition-all"
-                tabIndex={0}
               >
                 {item.label}
               </button>
