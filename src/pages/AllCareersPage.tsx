@@ -48,12 +48,14 @@ export default function AllCareersPage() {
                 key={career.id}
                 onClick={() => handleCardClick(career.id)}
                 className="relative glass-effect rounded-2xl p-6 flex flex-col justify-between min-h-[260px] transition-all duration-300 cursor-pointer hover:shadow-2xl"
-                style={{ border: '1px solid rgba(255,255,255,0.04)' }}
+                style={{ border: "1px solid rgba(255,255,255,0.04)" }}
               >
                 <div>
                   <div className="flex justify-between items-start">
                     <div>
-                      <h3 className="text-2xl font-bold text-primary mb-2">{career.title}</h3>
+                      <h3 className="text-2xl font-bold text-primary mb-2">
+                        {career.title}
+                      </h3>
                       <span className="inline-block text-sm font-medium text-cyan-200 bg-cyan-900/30 px-3 py-1 rounded-full mb-3">
                         {career.department}
                       </span>
@@ -70,7 +72,7 @@ export default function AllCareersPage() {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        boxShadow: '0 8px 30px rgba(6,182,212,0.25)'
+                        boxShadow: "0 8px 30px rgba(6,182,212,0.25)",
                       }}
                     >
                       <Briefcase size={22} strokeWidth={1.6} />
@@ -78,7 +80,8 @@ export default function AllCareersPage() {
                   </div>
 
                   <p className="text-secondary text-sm mb-6 line-clamp-3">
-                    {stripToPlainText(career.description) || "No description available."}
+                    {stripToPlainText(career.description) ||
+                      "No description available."}
                   </p>
                 </div>
 
@@ -95,8 +98,12 @@ export default function AllCareersPage() {
                     </span>
                   </div>
 
-                  {/* View Role Button (fixed at bottom, works properly) */}
-                  <Link to={`/careers/${career.id}`} onClick={(e) => e.stopPropagation()} className="text-teal-300 font-semibold hover:text-teal-200">
+                  {/* View Role Button */}
+                  <Link
+                    to={`/careers/${career.id}`}
+                    onClick={(e) => e.stopPropagation()}
+                    className="text-teal-300 font-semibold hover:text-teal-200"
+                  >
                     View Role →
                   </Link>
                 </div>

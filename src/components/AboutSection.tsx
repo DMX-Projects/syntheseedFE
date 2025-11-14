@@ -89,7 +89,7 @@ const AboutSection = () => {
               <span className="text-gradient">Your innovation canvas, powered by AI.</span>
             </h2>
             <p className={`text-lg max-w-2xl mx-auto ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
-              Syntheseed helps founders, entrepreneurs, and product teams turn sparks into shippable strategies — from research and validation to build and launch, all in one collaborative workspace.
+              Syntheseed helps founders, entrepreneurs, and product teams turn raw abstract thoughts into commercial innovations — from research and validation to build and launch — all in one collaborative workspace.
             </p>
           </div>
 
@@ -113,7 +113,7 @@ const AboutSection = () => {
                   icon: Rocket,
                   title: 'Innovation First',
                   description:
-                    'We leverage cutting-edge AI technology within a foundational innovation system that positions ideas for success.',
+                    'We leverage cutting-edge AI technology within a foundational innovation system that bridges the gap between innovation and implementation, positioning ideas for success.',
                 }
               ].map((item, idx) => (
                 <div

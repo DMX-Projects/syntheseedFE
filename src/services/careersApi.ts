@@ -1,4 +1,3 @@
-
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { Career } from "../types/content";
 
@@ -11,10 +10,15 @@ export const careersApi = createApi({
     getCareers: builder.query<Career[], void>({
       query: () => `api/careers/`,
     }),
+
     getCareerById: builder.query<Career, string | number>({
       query: (id) => `api/careers/${id}/`,
     }),
-    applyForCareer: builder.mutation<unknown, { id: string | number; formData: FormData }>({
+
+    applyForCareer: builder.mutation<
+      unknown,
+      { id: string | number; formData: FormData }
+    >({
       query: ({ id, formData }) => ({
         url: `api/careers/${id}/apply/`,
         method: "POST",
@@ -24,4 +28,8 @@ export const careersApi = createApi({
   }),
 });
 
-export const { useGetCareersQuery, useGetCareerByIdQuery, useApplyForCareerMutation } = careersApi;
+export const {
+  useGetCareersQuery,
+  useGetCareerByIdQuery,
+  useApplyForCareerMutation,
+} = careersApi;

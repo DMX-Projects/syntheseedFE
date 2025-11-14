@@ -4,10 +4,10 @@ export interface Blog {
   slug: string;
   category?: string;
   summary?: string;
-  excerpt?: string;
-  content?: string;
-  image?: string;
-  created_at: string;
+  excerpt?: string;       // optional fallback
+  content?: string;       // CKEditor HTML (optional)
+  image?: string;         // absolute URL returned by API
+  created_at: string;     // timestamp string
 }
 
 export interface Career {
@@ -15,12 +15,11 @@ export interface Career {
   title: string;
   department: string;
   location: string;
-  work_mode: string;
-  job_type: string;
-  description?: string;
-  short_description?: string;
-  details?: string;
-  posted_on: string;
-  tags?: string;
+  work_mode: string;          // Remote / Hybrid / Onsite
+  job_type: string;           // Full-time / Part-time / etc.
+  description?: string;       // CKEditor HTML
+  short_description?: string; // optional preview
+  details?: string;           // CKEditor HTML for job detail page
+  posted_on: string;          // date string
+  tags?: string;              // comma-separated tags
 }
-
