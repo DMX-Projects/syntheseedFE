@@ -8,7 +8,7 @@ const products = [
   {
     icon: Lightbulb,
     title: 'Instant Idea Expansion',
-    description: 'AI-powered brainstorming turns one thought into a fully developed concept.'
+    description: 'AI-powered brainstorming develops one thought into a full concept.'
   },
   {
     icon: Target,
