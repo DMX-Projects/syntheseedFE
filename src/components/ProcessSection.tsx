@@ -4,7 +4,7 @@ import { useScrollAnimation } from '../hooks/useScrollAnimation';
 const steps = [
   {
     number: 'STEP 1',
-    title: 'Capture and Develop',
+    title: 'Capture and Research',
     description: 'Capture your thoughts and start developing your idea.',
     image: 'https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg?auto=compress&cs=tinysrgb&w=800'
   },
@@ -70,7 +70,7 @@ const ProcessSection = () => {
             className="text-4xl font-extrabold tracking-tight mb-3 text-center"
             style={{ color: cyan }}
           >
-            From spark &rarr; reality in 4 steps
+            From spark &rarr;  launch in 4 steps
           </h2>
           <div
             className="text-center max-w-2xl mx-auto text-base font-medium mb-10"
