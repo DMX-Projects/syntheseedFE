@@ -22,7 +22,7 @@ const AllBlogs = () => {
   return (
     <>
       <Header />
-      <section className="py-20 bg-bg-primary">
+      <section className="min-h-screen bg-bg-primary py-16 pt-24">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <p className="text-teal-500 font-semibold uppercase tracking-widest mb-2">
             All Articles
