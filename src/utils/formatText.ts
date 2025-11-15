@@ -1,9 +1,9 @@
 import DOMPurify from "dompurify";
 
-// Detect if string already contains HTML
+// Detect if string actually contains HTML (more accurate)
 export function looksLikeHtml(s: string | undefined) {
   if (!s) return false;
-  return /<[^>]+>/.test(s);
+  return /<\/?[a-z][\s\S]*>/i.test(s);
 }
 
 function escapeHtml(unsafe: string) {
@@ -26,6 +26,7 @@ const KNOWN_HEADERS = new Set([
   "responsibilities and requirements",
 ]);
 
+// Allow CKEditor tags fully
 const RICH_TEXT_ALLOWED_TAGS = [
   "a",
   "b",
@@ -69,6 +70,8 @@ const RICH_TEXT_ALLOWED_ATTR = [
   "target",
   "rel",
   "src",
+  "srcset",      // FIX for CKEditor images
+  "loading",     // FIX for lazy-loaded images
   "alt",
   "title",
   "width",
@@ -77,7 +80,7 @@ const RICH_TEXT_ALLOWED_ATTR = [
   "class",
 ];
 
-// Convert plain text → HTML (fallback when CKEditor is not used)
+// Convert plain text → fallback HTML for non-CKEditor content
 export function formatPlainTextToHtml(raw: string | undefined): string {
   if (!raw) return "";
 
@@ -91,39 +94,34 @@ export function formatPlainTextToHtml(raw: string | undefined): string {
   for (const paragraph of paragraphs) {
     const trimmed = paragraph.trim();
 
-    // *Heading* Markdown-like
+    // *Heading*
     const asteriskMatch = trimmed.match(/^\*(.+)\*$/);
     if (asteriskMatch) {
       const inner = escapeHtml(asteriskMatch[1].trim());
-      out.push(
-        `<h3 class="text-lg font-semibold text-primary mb-2">${inner}</h3>`
-      );
+      out.push(`<h3 class="text-lg font-semibold text-primary mb-2">${inner}</h3>`);
       continue;
     }
 
-    // Matches known section headers
+    // Known headers
     if (KNOWN_HEADERS.has(trimmed.toLowerCase())) {
       out.push(
-        `<h4 class="text-md font-semibold text-primary mt-4 mb-2">${escapeHtml(
-          trimmed
-        )}</h4>`
+        `<h4 class="text-md font-semibold text-primary mt-4 mb-2">${escapeHtml(trimmed)}</h4>`
       );
       continue;
     }
 
-    // Normal paragraph with <br/>
+    // Default paragraph
     const withBreaks = escapeHtml(trimmed).replace(/\n/g, "<br/>");
-    out.push(
-      `<p class="text-secondary leading-relaxed text-[15px] mb-3">${withBreaks}</p>`
-    );
+    out.push(`<p class="text-secondary leading-relaxed text-[15px] mb-3">${withBreaks}</p>`);
   }
 
   return out.join("\n");
 }
 
-// Sanitize CKEditor or fallback HTML
+// Purify CKEditor HTML without breaking lists/images
 export function toSafeRichText(raw: string | undefined): string {
   if (!raw) return "";
+
   const html = looksLikeHtml(raw) ? raw : formatPlainTextToHtml(raw);
 
   return DOMPurify.sanitize(html, {
@@ -133,7 +131,6 @@ export function toSafeRichText(raw: string | undefined): string {
   });
 }
 
-// Remove all HTML → plain text preview
 export function stripToPlainText(raw: string | undefined): string {
   if (!raw) return "";
 

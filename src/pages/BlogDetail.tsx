@@ -73,11 +73,13 @@ const BlogDetail = () => {
         )}
 
         <h1 className="text-4xl font-bold mb-6 text-primary">{blog.title}</h1>
-        <p className="text-secondary mb-6">{new Date(blog.created_at).toLocaleDateString()}</p>
+        <p className="text-secondary mb-6">
+          {new Date(blog.created_at).toLocaleDateString()}
+        </p>
 
         {blog.content ? (
-          <div
-            className="prose max-w-none text-primary leading-relaxed"
+          <article
+            className="ck-content text-primary leading-relaxed"
             dangerouslySetInnerHTML={{ __html: toSafeRichText(blog.content) }}
           />
         ) : (
@@ -85,7 +87,11 @@ const BlogDetail = () => {
         )}
 
         <div className="mt-12">
-          <Link to="/blogs" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="btn-primary">
+          <Link
+            to="/blogs"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="btn-primary"
+          >
             ← Back to All Blogs
           </Link>
         </div>

@@ -10,14 +10,13 @@ import type { Career } from "../types/content";
 const CareerDetail = () => {
   const { id } = useParams();
 
-  // use RTK Query hook
   const { data, isLoading, isError } = useGetCareerByIdQuery(id ?? "", {
     skip: !id,
   });
 
   const career: Career | undefined = data;
 
-  // Error UI
+  // Error State
   if (isError)
     return (
       <>
@@ -29,7 +28,7 @@ const CareerDetail = () => {
       </>
     );
 
-  // Loading UI (Skeleton)
+  // Loading State (Skeleton)
   if (isLoading || !career)
     return (
       <>
@@ -99,11 +98,11 @@ const CareerDetail = () => {
           </div>
         </div>
 
-        {/* Description Section */}
+        {/* Description Section — CKEditor Supported */}
         <div className="mt-4">
           {career.description ? (
-            <div
-              className="text-secondary leading-relaxed text-[15px] space-y-3 ck-content"
+            <article
+              className="ck-content text-secondary leading-relaxed text-[15px] space-y-3"
               dangerouslySetInnerHTML={{
                 __html: toSafeRichText(career.description),
               }}
@@ -129,15 +128,15 @@ const CareerDetail = () => {
           </button>
         </div>
 
-        {/* Job Details Section */}
+        {/* Job Details Section — CKEditor Supported */}
         <div className="bg-bg-secondary rounded-2xl shadow-sm p-6 mt-6">
           <h2 className="text-xl font-semibold text-primary mb-3">
             Job Responsibilities & Requirements
           </h2>
 
           {career.details ? (
-            <div
-              className="text-secondary leading-relaxed text-[15px] space-y-3 ck-content"
+            <article
+              className="ck-content text-secondary leading-relaxed text-[15px] space-y-3"
               dangerouslySetInnerHTML={{
                 __html: toSafeRichText(career.details),
               }}
@@ -153,7 +152,7 @@ const CareerDetail = () => {
   );
 };
 
-// Remove HTML from share text
+// remove tags for share text
 const stripHTML = (html: string) => html.replace(/<[^>]+>/g, "");
 
 export default CareerDetail;
