@@ -1,6 +1,7 @@
 import { useGetBlogsQuery } from "../services/blogApi";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
+import Seo from "../components/Seo";
 import Footer from "../components/Footer";
 import { useEffect } from "react";
 import { stripToPlainText } from "../utils/formatText";
@@ -21,6 +22,12 @@ const AllBlogs = () => {
 
   return (
     <>
+      <Seo
+        title="Blog"
+        description="Insights on AI, product strategy and technology innovation from the Syntheseed team."
+        canonical="https://syntheseed.com/blogs"
+        openGraph={{ title: 'Syntheseed Blog', description: 'Insights on AI, product strategy and technology innovation from the Syntheseed team.', image: '/assets/og-image.png', url: 'https://syntheseed.com/blogs' }}
+      />
       <Header />
       <section className="min-h-screen bg-bg-primary py-16 pt-24">
         <div className="max-w-7xl mx-auto px-4 text-center">

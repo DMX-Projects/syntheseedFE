@@ -5,6 +5,7 @@ import { useGetCareersQuery } from "../services/careersApi";
 import { stripToPlainText } from "../utils/formatText";
 import type { Career } from "../types/content";
 import Header from "../components/Header";
+import Seo from "../components/Seo";
 import Footer from "../components/Footer";
 
 export default function AllCareersPage() {
@@ -18,6 +19,12 @@ export default function AllCareersPage() {
 
   return (
     <>
+      <Seo
+        title="Careers"
+        description="Explore open roles at Syntheseed and join our team building modern products."
+        canonical="https://syntheseed.com/careers/all"
+        openGraph={{ title: 'Syntheseed Careers', description: 'Explore open roles at Syntheseed and join our team building modern products.', image: '/assets/og-image.png', url: 'https://syntheseed.com/careers/all' }}
+      />
       <Header />
       <section className="min-h-screen bg-bg-primary py-16 pt-24">
         <div className="max-w-7xl mx-auto px-6">

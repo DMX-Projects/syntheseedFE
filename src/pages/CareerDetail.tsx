@@ -4,6 +4,7 @@ import { Briefcase, MapPin, Clock, Share2 } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { toSafeRichText, stripToPlainText } from "../utils/formatText";
+import Seo from "../components/Seo";
 import type { Career } from "../types/content";
 
 const CareerDetail = () => {
@@ -60,6 +61,29 @@ const CareerDetail = () => {
 
   return (
     <>
+      {career && (
+        <Seo
+          title={career.title}
+          description={stripToPlainText(career.description).slice(0, 160)}
+          canonical={`https://syntheseed.com/careers/${career.id}`}
+          openGraph={{
+            title: career.title,
+            description: stripToPlainText(career.description).slice(0, 160),
+            image: '/assets/og-image.png',
+            url: `https://syntheseed.com/careers/${career.id}`,
+          }}
+          jsonLd={{
+            '@context': 'https://schema.org',
+            '@type': 'JobPosting',
+            title: career.title,
+            description: stripToPlainText(career.description),
+            datePosted: career.posted_on || new Date().toISOString(),
+            employmentType: career.job_type,
+            jobLocation: { '@type': 'Place', address: { '@type': 'PostalAddress', addressLocality: career.location } },
+            hiringOrganization: { '@type': 'Organization', name: 'Syntheseed' },
+          }}
+        />
+      )}
       <Header />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 mb-10 pt-24">
         <div className="border-b pb-4 flex flex-wrap items-start justify-between gap-4">

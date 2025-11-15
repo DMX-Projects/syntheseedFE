@@ -3,6 +3,7 @@ import { Mail, Send } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { useSubmitContactMutation } from '../services/contactApi';
 import toast from 'react-hot-toast';
+import analytics from '../utils/analytics';
 
 const contacts = [
   {
@@ -45,9 +46,13 @@ const ContactSection = () => {
     try {
       await submitContact(formData).unwrap();
       toast.success('Message sent successfully!');
+      // Analytics: track contact form success
+      analytics.trackFormSubmission('contact_form', true, { page: window.location.pathname });
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (err) {
       const message = (err as { data?: { message?: string } })?.data?.message;
+      // Analytics: track contact form failure
+      analytics.trackFormSubmission('contact_form', false, { page: window.location.pathname });
       toast.error(message || 'Failed to send message!');
     }
   };

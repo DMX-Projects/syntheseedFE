@@ -3,7 +3,8 @@ import { useEffect } from "react";
 import { useGetBlogDetailQuery } from "../services/blogApi";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { toSafeRichText } from "../utils/formatText";
+import Seo from "../components/Seo";
+import { stripToPlainText, toSafeRichText } from "../utils/formatText";
 
 const BlogDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -13,6 +14,7 @@ const BlogDetail = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
+  // Loading skeleton
   if (isLoading) {
     return (
       <>
@@ -53,27 +55,52 @@ const BlogDetail = () => {
     );
   }
 
+  const anyBlog: any = blog as any;
+  const seoDescription = anyBlog ? stripToPlainText(anyBlog.excerpt ?? anyBlog.summary ?? anyBlog.content).slice(0, 160) : '';
+
   return (
     <>
+      {anyBlog && (
+        <Seo
+          title={anyBlog.title}
+          description={seoDescription}
+          canonical={`https://your-domain.com/blogs/${anyBlog.slug}`}
+          openGraph={{
+            title: anyBlog.title,
+            description: seoDescription,
+            image: anyBlog.image || '/assets/og-image.png',
+            url: `https://your-domain.com/blogs/${anyBlog.slug}`,
+          }}
+          jsonLd={{
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: anyBlog.title,
+            image: [anyBlog.image || 'https://your-domain.com/assets/og-image.png'],
+            datePublished: anyBlog.created_at,
+            author: { '@type': 'Organization', name: 'Syntheseed' },
+          }}
+        />
+      )}
+
       <Header />
       <section className="max-w-5xl mx-auto px-6 py-20 pt-24">
-        {blog.image && (
+        {anyBlog.image && (
           <div className="mb-8">
             <img
-              src={blog.image}
-              alt={blog.title}
+              src={anyBlog.image}
+              alt={anyBlog.title}
               className="w-full rounded-2xl shadow-md object-cover max-h-[400px]"
             />
           </div>
         )}
 
-        <h1 className="text-4xl font-bold mb-5 text-primary">{blog.title}</h1>
-        <p className="text-secondary mb-4">{new Date(blog.created_at).toLocaleDateString()}</p>
+        <h1 className="text-4xl font-bold mb-5 text-primary">{anyBlog.title}</h1>
+        <p className="text-secondary mb-4">{new Date(anyBlog.created_at).toLocaleDateString()}</p>
 
-        {blog.content ? (
+        {anyBlog.content ? (
           <div
             className="prose prose-neutral prose-sm max-w-none leading-relaxed text-primary"
-            dangerouslySetInnerHTML={{ __html: toSafeRichText(blog.content) }}
+            dangerouslySetInnerHTML={{ __html: toSafeRichText(anyBlog.content) }}
           />
         ) : (
           <p className="text-secondary">No content available.</p>

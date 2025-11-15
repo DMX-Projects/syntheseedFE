@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
+import Seo from "./components/Seo";
 import HeroSection from "./components/HeroSection";
 import AboutSection from "./components/AboutSection";
 import ProcessSection from "./components/ProcessSection";
@@ -19,6 +20,27 @@ import BlogDetail from "./pages/BlogDetail";
 
 const HomePage = () => (
   <>
+    {/* Example SEO usage for the homepage */}
+    {/* Seo component sets title, description, open graph tags and optional JSON-LD */}
+    <Seo
+      title="Home"
+      description="Syntheseed — Product engineering & digital transformation. We build modern web and mobile products that scale."
+      canonical="https://syntheseed.com/"
+      openGraph={{
+        title: 'Syntheseed',
+        description: 'Product engineering & digital transformation. We build modern web and mobile products that scale.',
+        image: '/assets/og-image.png',
+        url: 'https://syntheseed.com/',
+      }}
+      jsonLd={{
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: 'Syntheseed',
+        url: 'https://syntheseed.com/',
+        logo: 'https://syntheseed.com/assets/og-image.png',
+      }}
+    />
+
     <Header />
     <HeroSection />
     <AboutSection />
