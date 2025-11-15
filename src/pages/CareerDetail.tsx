@@ -1,64 +1,50 @@
-// src/pages/CareerDetail.tsx
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useGetCareerByIdQuery } from "../services/careersApi";
 import { Briefcase, MapPin, Clock, Share2 } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { toSafeRichText } from "../utils/formatText";
+import { toSafeRichText, stripToPlainText } from "../utils/formatText";
 import type { Career } from "../types/content";
 
 const CareerDetail = () => {
   const { id } = useParams();
-
-  // use RTK Query hook
-  const { data, isLoading, isError } = useGetCareerByIdQuery(id ?? "", {
-    skip: !id,
-  });
-
+  const { data, isLoading, isError } = useGetCareerByIdQuery(id ?? "", { skip: !id });
   const career: Career | undefined = data;
 
-  // Error UI
   if (isError)
     return (
       <>
         <Header />
-        <div className="text-center text-red-600 py-16 text-lg">
-          Unable to load career details. Please try again.
-        </div>
+        <div className="text-center text-red-600 py-16 text-lg">Unable to load career details. Please try again.</div>
         <Footer />
       </>
     );
 
-  // Loading UI (Skeleton)
   if (isLoading || !career)
     return (
       <>
         <Header />
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 mb-16">
-          {/* Skeleton header */}
-          <div className="border-b pb-4">
-            <div className="h-8 bg-gray-200/60 dark:bg-white/5 rounded w-1/2 animate-pulse mb-3"></div>
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="h-4 bg-gray-200/60 dark:bg-white/5 rounded w-36 animate-pulse"></div>
-              <div className="h-4 bg-gray-200/60 dark:bg-white/5 rounded w-28 animate-pulse"></div>
-              <div className="h-4 bg-gray-200/60 dark:bg-white/5 rounded w-32 animate-pulse"></div>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 mb-10 pt-24">
+          {/* Header Skeleton */}
+          <div className="border-b pb-4 flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <div className="h-8 bg-gray-200/60 dark:bg-white/5 rounded w-1/2 animate-pulse mb-3"></div>
+              <div className="flex flex-wrap items-center gap-3">
+                <div className="h-4 bg-gray-200/60 dark:bg-white/5 rounded w-36 animate-pulse"></div>
+                <div className="h-4 bg-gray-200/60 dark:bg-white/5 rounded w-28 animate-pulse"></div>
+                <div className="h-4 bg-gray-200/60 dark:bg-white/5 rounded w-32 animate-pulse"></div>
+              </div>
             </div>
+            <div className="h-9 w-24 bg-gray-200/60 dark:bg-white/5 rounded-md animate-pulse mt-2"></div>
           </div>
-
-          {/* Description skeleton */}
-          <div className="mt-4 space-y-3">
+          {/* Description Skeleton */}
+          <div className="mt-2 space-y-3">
             <div className="h-4 bg-gray-200/60 dark:bg-white/5 rounded w-full animate-pulse"></div>
             <div className="h-4 bg-gray-200/60 dark:bg-white/5 rounded w-full animate-pulse"></div>
             <div className="h-4 bg-gray-200/60 dark:bg-white/5 rounded w-5/6 animate-pulse"></div>
           </div>
-
-          {/* Share skeleton */}
-          <div className="flex justify-end mt-4">
-            <div className="h-9 w-24 bg-gray-200/60 dark:bg-white/5 rounded-md animate-pulse"></div>
-          </div>
-
-          {/* Job details skeleton */}
-          <div className="bg-bg-secondary rounded-2xl shadow-sm p-6 mt-6">
+          {/* Job Details Skeleton */}
+          <div className="bg-bg-secondary rounded-2xl shadow-sm p-6 mt-4">
             <div className="h-6 bg-gray-200/60 dark:bg-white/5 rounded w-1/3 mb-4 animate-pulse"></div>
             <div className="space-y-3">
               <div className="h-3 bg-gray-200/60 dark:bg-white/5 rounded w-full animate-pulse"></div>
@@ -75,85 +61,68 @@ const CareerDetail = () => {
   return (
     <>
       <Header />
-
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 mb-16">
-        {/* Header Section */}
-        <div className="border-b pb-4">
-          <h1 className="text-3xl font-bold text-primary mb-2">
-            {career.title}
-          </h1>
-
-          <div className="flex flex-wrap items-center gap-3 text-secondary text-sm">
-            <span className="flex items-center gap-1">
-              <Briefcase size={16} /> <span>{career.department}</span>
-            </span>
-            <span className="flex items-center gap-1">
-              <MapPin size={16} /> <span>{career.location}</span>
-            </span>
-            <span className="flex items-center gap-1">
-              <Clock size={16} />{" "}
-              <span>
-                {career.job_type} • {career.work_mode}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 mb-10 pt-24">
+        <div className="border-b pb-4 flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-bold text-primary mb-1">{career.title}</h1>
+            <div className="flex flex-wrap items-center gap-3 text-secondary text-sm mt-1">
+              <span className="flex items-center gap-1">
+                <Briefcase size={16} /> <span>{career.department}</span>
               </span>
-            </span>
+              <span className="flex items-center gap-1">
+                <MapPin size={16} /> <span>{career.location}</span>
+              </span>
+              <span className="flex items-center gap-1">
+                <Clock size={16} /> <span>{career.job_type} • {career.work_mode}</span>
+              </span>
+            </div>
           </div>
-        </div>
-
-        {/* Description Section */}
-        <div className="mt-4">
-          {career.description ? (
-            <div
-              className="text-secondary leading-relaxed text-[15px] space-y-3 ck-content"
-              dangerouslySetInnerHTML={{
-                __html: toSafeRichText(career.description),
-              }}
-            />
-          ) : (
-            <p className="text-secondary">No description available.</p>
-          )}
-        </div>
-
-        {/* Share Button */}
-        <div className="flex justify-end mt-3">
           <button
             onClick={() =>
               navigator.share?.({
                 title: career.title,
-                text: stripHTML(career.description || ""),
+                text: stripToPlainText(career.description || ""),
                 url: window.location.href,
               })
             }
-            className="btn-primary inline-flex items-center gap-2 px-3 py-2"
+            className="btn-primary inline-flex items-center gap-2 px-3 py-2 mt-2"
+            style={{ whiteSpace: "nowrap" }}
           >
             <Share2 size={16} /> Share
           </button>
         </div>
-
-        {/* Job Details Section */}
-        <div className="bg-bg-secondary rounded-2xl shadow-sm p-6 mt-6">
-          <h2 className="text-xl font-semibold text-primary mb-3">
+        <div className="mt-2">
+          {career.description ? (
+            <div className="prose prose-neutral prose-sm max-w-none ck-content"
+              dangerouslySetInnerHTML={{ __html: toSafeRichText(career.description) }} />
+          ) : (
+            <p className="text-secondary">No description available.</p>
+          )}
+        </div>
+        <div className="bg-bg-secondary rounded-2xl shadow-sm p-6 mt-4">
+          <h2 className="text-xl font-semibold text-primary mb-2">
             Job Responsibilities & Requirements
           </h2>
-
           {career.details ? (
-            <div
-              className="text-secondary leading-relaxed text-[15px] space-y-3 ck-content"
-              dangerouslySetInnerHTML={{
-                __html: toSafeRichText(career.details),
-              }}
-            />
+            <div className="prose prose-neutral prose-sm max-w-none ck-content"
+              dangerouslySetInnerHTML={{ __html: toSafeRichText(career.details) }} />
           ) : (
             <p className="text-secondary">No additional details provided.</p>
           )}
         </div>
       </div>
-
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+        <Link
+          to="/careers/all"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="btn-primary"
+        >
+          ← Back to All Careers
+        </Link>
+      </div>
       <Footer />
     </>
   );
 };
-
-// Remove HTML from share text
-const stripHTML = (html: string) => html.replace(/<[^>]+>/g, "");
 
 export default CareerDetail;
