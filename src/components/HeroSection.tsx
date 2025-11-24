@@ -30,9 +30,8 @@ const HeroSection = () => {
         <div className="max-w-4xl mx-auto text-center px-4">
           <div className="relative z-10">
             <h1
-              className={`text-2xl sm:text-3xl md:text-5xl font-bold mb-6 animate-slide-up drop-shadow-2xl ${
-                isDark ? 'text-cyan-400' : 'text-cyan-700'
-              }`}
+              className={`text-2xl sm:text-3xl md:text-5xl font-bold mb-6 animate-slide-up drop-shadow-2xl ${isDark ? 'text-[rgb(var(--synth-blue))]' : 'text-[rgb(var(--synth-blue))]'
+                }`}
             >
               No Idea Should Be Left Behind
             </h1>
@@ -50,8 +49,8 @@ const HeroSection = () => {
             style={{ animationDelay: '0.4s' }}
           >
             <button onClick={handleGetStarted} className="btn-secondary px-6 py-3 sm:px-8 sm:py-4">
-  <span className="text-sm sm:text-base">Get started →</span>
-</button>
+              <span className="text-sm sm:text-base">Get started →</span>
+            </button>
 
           </div>
         </div>

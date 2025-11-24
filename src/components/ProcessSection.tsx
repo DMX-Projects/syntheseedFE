@@ -37,16 +37,11 @@ const ProcessSection = () => {
   const { ref, isVisible } = useScrollAnimation();
   const { theme } = useTheme();
   const isDark = theme === 'dark';
-  const cyan = "#06b6d4";
 
   return (
     <section
       id="process"
-      style={{
-        background: isDark ? '#181e27' : '#f5fafd',
-        color: isDark ? '#fff' : '#181e27',
-      }}
-      className="py-16 w-full"
+      className={`py-16 w-full transition-colors duration-300 ${isDark ? 'bg-[rgb(var(--bg-secondary))]' : 'bg-[rgb(var(--bg-secondary))]'}`}
     >
       <div className="container mx-auto px-6">
         <div
@@ -55,11 +50,9 @@ const ProcessSection = () => {
         >
           <div className="text-center mb-2">
             <span
-              className="inline-block rounded-full px-3 py-1 font-semibold tracking-wide uppercase"
+              className={`inline-block rounded-full px-3 py-1 font-semibold tracking-wide uppercase ${isDark ? 'bg-[#232a37] text-[rgb(var(--synth-blue))]' : 'bg-[#ecfeff] text-[rgb(var(--synth-blue))]'}`}
               style={{
                 fontSize: "0.95rem",
-                background: isDark ? "#232a37" : "#ecfeff",
-                color: cyan,
                 letterSpacing: "0.04em"
               }}
             >
@@ -67,14 +60,12 @@ const ProcessSection = () => {
             </span>
           </div>
           <h2
-            className="text-4xl font-extrabold tracking-tight mb-3 text-center"
-            style={{ color: cyan }}
+            className={`text-4xl font-extrabold tracking-tight mb-3 text-center ${isDark ? 'text-[rgb(var(--synth-blue))]' : 'text-[rgb(var(--synth-blue))]'}`}
           >
             From spark &rarr;  launch in 4 steps
           </h2>
           <div
-            className="text-center max-w-2xl mx-auto text-base font-medium mb-10"
-            style={{ color: isDark ? '#e6e6e6' : '#333' }}
+            className={`text-center max-w-2xl mx-auto text-base font-medium mb-10 ${isDark ? 'text-[rgb(var(--text-secondary))]' : 'text-[rgb(var(--text-secondary))]'}`}
           >
 
           </div>
@@ -84,8 +75,7 @@ const ProcessSection = () => {
               {steps.map((step) => (
                 <div key={step.number} className="flex flex-col items-center text-center w-full px-3">
                   <div
-                    className="rounded-full flex items-center justify-center border-4 shadow-lg bg-white dark:bg-[#232a37] mb-3 p-2"
-                    style={{ borderColor: cyan }}
+                    className={`rounded-full flex items-center justify-center border-4 shadow-lg mb-3 p-2 ${isDark ? 'bg-[#232a37] border-[rgb(var(--synth-blue))]' : 'bg-white border-[rgb(var(--synth-blue))]'}`}
                   >
                     {/* responsive avatar sizes: small on mobile, larger on desktop */}
                     <img
@@ -95,13 +85,13 @@ const ProcessSection = () => {
                     />
                   </div>
 
-                  <div className="font-bold text-sm sm:text-base uppercase tracking-widest mt-1" style={{ color: cyan }}>
+                  <div className={`font-bold text-sm sm:text-base uppercase tracking-widest mt-1 ${isDark ? 'text-[rgb(var(--synth-blue))]' : 'text-[rgb(var(--synth-blue))]'}`}>
                     {step.number}
                   </div>
-                  <div className="font-semibold text-lg sm:text-xl mt-1 mb-2" style={{ color: isDark ? '#fff' : '#181e27' }}>
+                  <div className={`font-semibold text-lg sm:text-xl mt-1 mb-2 ${isDark ? 'text-[rgb(var(--text-primary))]' : 'text-[rgb(var(--text-primary))]'}`}>
                     {step.title}
                   </div>
-                  <div className="text-sm sm:text-base leading-relaxed px-2" style={{ color: isDark ? '#e0e0e0' : '#555', whiteSpace: 'pre-line' }}>
+                  <div className={`text-sm sm:text-base leading-relaxed px-2 ${isDark ? 'text-[rgb(var(--text-secondary))]' : 'text-[rgb(var(--text-secondary))]'}`} style={{ whiteSpace: 'pre-line' }}>
                     {step.description}
                   </div>
                 </div>

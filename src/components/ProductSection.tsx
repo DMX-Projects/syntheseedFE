@@ -55,20 +55,19 @@ const ProductFeaturesSection = () => {
       <div className="container mx-auto px-6">
         {/* Centered Heading and Subtitle */}
         <div className="mb-12 text-center max-w-3xl mx-auto">
-          <p className="text-sm font-semibold tracking-widest text-cyan-500 mb-2">PRODUCT</p>
-          <h2 className={`text-3xl font-bold mb-3 ${isDark ? 'text-cyan-400' : 'text-cyan-500'}`}>
+          <p className="text-sm font-semibold tracking-widest text-[rgb(var(--synth-blue))] mb-2">PRODUCT</p>
+          <h2 className={`text-3xl font-bold mb-3 ${isDark ? 'text-[rgb(var(--synth-blue))]' : 'text-[rgb(var(--synth-blue))]'}`}>
             Everything you need to go from spark to launch
           </h2>
-          <p className={`text-lg ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
+          <p className={`text-lg ${isDark ? 'text-[rgb(var(--text-secondary))]' : 'text-[rgb(var(--text-secondary))]'}`}>
             Capture and expand ideas, validate with AI, research patents deeply, align go-to-market plans, and build ideas—all in one place.
           </p>
         </div>
         {/* Content: Illustration and Grid */}
         <div
           ref={ref}
-          className={`max-w-[1500px] mx-auto transition-all duration-1000 flex flex-col lg:flex-row items-center lg:items-start gap-12 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}
+          className={`max-w-[1500px] mx-auto transition-all duration-1000 flex flex-col lg:flex-row items-center lg:items-start gap-12 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
         >
           {/* Illustration column */}
           <div className="flex-shrink-0 flex justify-center items-center w-full lg:w-[430px]">
