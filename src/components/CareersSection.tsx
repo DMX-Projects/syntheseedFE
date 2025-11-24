@@ -9,15 +9,15 @@ export default function CareersSection() {
   const careers = (careersData as Career[]).slice(0, 6);
 
   return (
-    <section id="careers" className="py-20 bg-bg-primary">
+    <section id="careers" className="py-20 bg-[rgb(var(--bg-primary))]">
       <div className="max-w-7xl mx-auto px-4 text-center">
-        <p className="text-teal-500 font-semibold uppercase tracking-widest mb-2">
+        <p className="text-[rgb(var(--synth-blue))] font-semibold uppercase tracking-widest mb-2">
           CAREERS
         </p>
-        <h2 className="text-4xl md:text-5xl font-extrabold text-primary mb-3">
+        <h2 className="text-4xl md:text-5xl font-extrabold text-[rgb(var(--text-primary))] mb-3">
           Join Our Team
         </h2>
-        <p className="text-secondary text-lg mb-12">
+        <p className="text-[rgb(var(--text-secondary))] text-lg mb-12">
           Build the future of innovation with us — explore our open roles.
         </p>
 
@@ -49,34 +49,34 @@ export default function CareersSection() {
             {careers.map((career: Career) => (
               <div
                 key={career.id}
-                className="bg-bg-secondary rounded-2xl shadow-md hover:shadow-2xl border border-teal-100 transition-all duration-300 transform hover:-translate-y-2 flex flex-col overflow-hidden"
+                className="bg-[rgb(var(--bg-secondary))] rounded-2xl shadow-md hover:shadow-2xl border border-[rgb(var(--border-subtle))] transition-all duration-300 transform hover:-translate-y-2 flex flex-col overflow-hidden"
               >
                 <div className="p-6 flex flex-col flex-grow text-left">
                   <div className="flex justify-between items-start mb-4">
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-primary mb-3 leading-snug">
+                      <h3 className="text-xl font-bold text-[rgb(var(--text-primary))] mb-3 leading-snug">
                         {career.title}
                       </h3>
-                      <span className="inline-block bg-teal-100 text-teal-600 text-xs font-semibold px-3 py-1 rounded-full">
+                      <span className="inline-block bg-[rgba(var(--synth-blue),0.1)] text-[rgb(var(--synth-blue))] text-xs font-semibold px-3 py-1 rounded-full">
                         {career.department}
                       </span>
                     </div>
-                    <div className="bg-gradient-to-tr from-cyan-400 to-teal-500 p-3 rounded-xl text-white shadow-lg">
+                    <div className="bg-gradient-to-tr from-[rgb(var(--synth-blue))] to-[rgb(var(--synth-blue-inactive))] p-3 rounded-xl text-white shadow-lg">
                       <Briefcase size={20} />
                     </div>
                   </div>
 
-                  <p className="text-secondary text-sm mb-4 flex-grow line-clamp-3 leading-relaxed">
+                  <p className="text-[rgb(var(--text-secondary))] text-sm mb-4 flex-grow line-clamp-3 leading-relaxed">
                     {stripToPlainText(career.description) || "No description available."}
                   </p>
 
-                  <div className="text-secondary text-sm flex items-center flex-wrap gap-4 mb-4">
+                  <div className="text-[rgb(var(--text-secondary))] text-sm flex items-center flex-wrap gap-4 mb-4">
                     <span className="flex items-center gap-1">
-                      <MapPin size={14} className="text-teal-500" />
+                      <MapPin size={14} className="text-[rgb(var(--synth-blue))]" />
                       {career.location}
                     </span>
                     <span className="flex items-center gap-1">
-                      <Clock size={14} className="text-teal-500" />
+                      <Clock size={14} className="text-[rgb(var(--synth-blue))]" />
                       {career.job_type}
                     </span>
                   </div>
@@ -86,7 +86,7 @@ export default function CareersSection() {
                     onClick={() =>
                       window.scrollTo({ top: 0, behavior: "smooth" })
                     }
-                    className="text-teal-600 font-medium hover:text-teal-700 mt-auto flex items-center gap-1"
+                    className="text-[rgb(var(--synth-blue))] font-medium hover:text-[rgb(var(--synth-blue-inactive))] mt-auto flex items-center gap-1"
                   >
                     View Role →
                   </Link>

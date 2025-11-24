@@ -4,6 +4,7 @@ import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { useSubmitContactMutation } from '../services/contactApi';
 import toast from 'react-hot-toast';
 import analytics from '../utils/analytics';
+import { useTheme } from '../contexts/ThemeContext';
 
 const contacts = [
   {
@@ -30,6 +31,8 @@ const contacts = [
 
 const ContactSection = () => {
   const { ref, isVisible } = useScrollAnimation();
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
 
   const [formData, setFormData] = useState({
     name: '',
@@ -68,22 +71,21 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="py-12 relative">
+    <section id="contact" className="py-12 relative bg-[rgb(var(--bg-primary))]">
       <div className="container mx-auto px-6">
         <div
           ref={ref}
-          className={`max-w-6xl mx-auto transition-all duration-1000 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}
+          className={`max-w-6xl mx-auto transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
         >
           <div className="text-center mb-12">
-            <p className="text-sm font-semibold tracking-widest text-cyan-500 mb-1">CONTACT</p>
-            <h2 className="text-3xl md:text-3xl font-extrabold mb-4 text-cyan-500">
-              <span className="bg-gradient-to-r from-cyan-400 via-cyan-600 to-cyan-400 bg-clip-text text-transparent">
+            <p className="text-sm font-semibold tracking-widest text-[rgb(var(--synth-blue))] mb-1">CONTACT</p>
+            <h2 className="text-3xl md:text-3xl font-extrabold mb-4 text-[rgb(var(--synth-blue))]">
+              <span className="text-gradient">
                 Get In Touch
               </span>
             </h2>
-            <p className="text-lg md:text-xl text-secondary max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-[rgb(var(--text-secondary))] max-w-2xl mx-auto">
               Ready to transform your ideas into reality? Let's start a conversation.
             </p>
           </div>
@@ -91,18 +93,18 @@ const ContactSection = () => {
           <div className="grid md:grid-cols-2 gap-10">
             {/* Contact Information Card */}
             <div className="glass-effect rounded-2xl shadow-lg p-8 flex flex-col justify-center min-h-[370px]">
-              <h3 className="text-2xl font-bold mb-7 text-primary">Contact Us</h3>
+              <h3 className="text-2xl font-bold mb-7 text-[rgb(var(--text-primary))]">Contact Us</h3>
               <div className="space-y-6">
                 {contacts.map((item, idx) => (
                   <div key={idx} className="flex items-center gap-3 transition-all">
-                    <span className="w-12 h-12 rounded-xl flex items-center justify-center bg-cyan-500 shadow">
+                    <span className="w-12 h-12 rounded-xl flex items-center justify-center bg-[rgb(var(--synth-blue))] shadow">
                       <item.icon className="w-6 h-6 text-white" />
                     </span>
                     <div>
-                      <h4 className="text-base font-bold mb-0.5 text-primary">{item.title}</h4>
+                      <h4 className="text-base font-bold mb-0.5 text-[rgb(var(--text-primary))]">{item.title}</h4>
                       <a
                         href={`mailto:${item.email}`}
-                        className="text-cyan-500 hover:text-cyan-700 text-sm transition"
+                        className="text-[rgb(var(--synth-blue))] hover:text-[rgb(var(--synth-blue-inactive))] text-sm transition"
                         tabIndex={0}
                       >
                         {item.email}
@@ -117,7 +119,7 @@ const ContactSection = () => {
             <div className="glass-effect rounded-2xl shadow-lg p-8 flex flex-col justify-center">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label htmlFor="name" className="block text-cyan-600 font-medium mb-1">
+                  <label htmlFor="name" className="block text-[rgb(var(--synth-blue))] font-medium mb-1">
                     Name
                   </label>
                   <input
@@ -132,7 +134,7 @@ const ContactSection = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-cyan-600 font-medium mb-1">
+                  <label htmlFor="email" className="block text-[rgb(var(--synth-blue))] font-medium mb-1">
                     Email
                   </label>
                   <input
@@ -147,7 +149,7 @@ const ContactSection = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="subject" className="block text-cyan-600 font-medium mb-1">
+                  <label htmlFor="subject" className="block text-[rgb(var(--synth-blue))] font-medium mb-1">
                     Subject
                   </label>
                   <input
@@ -162,7 +164,7 @@ const ContactSection = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="message" className="block text-cyan-600 font-medium mb-1">
+                  <label htmlFor="message" className="block text-[rgb(var(--synth-blue))] font-medium mb-1">
                     Message
                   </label>
                   <textarea
@@ -179,9 +181,8 @@ const ContactSection = () => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className={`btn-primary w-full flex items-center justify-center gap-2 py-3 text-lg font-semibold rounded-xl transition ${
-                    isLoading ? 'opacity-70 cursor-not-allowed' : ''
-                  }`}
+                  className={`btn-primary w-full flex items-center justify-center gap-2 py-3 text-lg font-semibold rounded-xl transition ${isLoading ? 'opacity-70 cursor-not-allowed' : ''
+                    }`}
                 >
                   <Send className="w-5 h-5" />
                   {isLoading ? 'Sending...' : 'Send Message'}

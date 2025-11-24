@@ -21,15 +21,15 @@ const BlogSection = () => {
   };
 
   return (
-    <section id="blogs" className="py-20 bg-bg-primary">
+    <section id="blogs" className="py-20 bg-[rgb(var(--bg-primary))]">
       <div className="max-w-7xl mx-auto px-4 text-center">
-        <p className="text-teal-500 font-semibold uppercase tracking-widest mb-2">
+        <p className="text-[rgb(var(--synth-blue))] font-semibold uppercase tracking-widest mb-2">
           BLOG
         </p>
-        <h2 className="text-4xl md:text-5xl font-extrabold text-primary mb-3">
+        <h2 className="text-4xl md:text-5xl font-extrabold text-[rgb(var(--text-primary))] mb-3">
           Latest from Syntheseed
         </h2>
-        <p className="text-secondary text-lg mb-12">
+        <p className="text-[rgb(var(--text-secondary))] text-lg mb-12">
           Ideas on product strategy, go-to-market, and founder operations.
         </p>
 
@@ -53,7 +53,7 @@ const BlogSection = () => {
             {recentBlogs.map((blog: Blog) => (
               <div
                 key={blog.id}
-                className="bg-bg-secondary rounded-2xl shadow-md hover:shadow-2xl border border-teal-100 transition-all duration-300 transform hover:-translate-y-2 flex flex-col overflow-hidden"
+                className="bg-[rgb(var(--bg-secondary))] rounded-2xl shadow-md hover:shadow-2xl border border-[rgb(var(--border-subtle))] transition-all duration-300 transform hover:-translate-y-2 flex flex-col overflow-hidden"
               >
                 <img
                   src={blog.image}
@@ -62,10 +62,10 @@ const BlogSection = () => {
                 />
                 <div className="p-6 flex flex-col flex-grow text-left">
                   <div className="flex items-center justify-between mb-3">
-                    <span className="bg-teal-100 text-teal-600 text-xs font-semibold px-3 py-1 rounded-full">
+                    <span className="bg-[rgba(var(--synth-blue),0.1)] text-[rgb(var(--synth-blue))] text-xs font-semibold px-3 py-1 rounded-full">
                       {blog.category || "AI & Innovation"}
                     </span>
-                    <span className="text-secondary text-sm">
+                    <span className="text-[rgb(var(--text-secondary))] text-sm">
                       {new Date(blog.created_at).toLocaleDateString("en-US", {
                         month: "short",
                         day: "2-digit",
@@ -74,17 +74,17 @@ const BlogSection = () => {
                     </span>
                   </div>
 
-                  <h3 className="text-lg font-semibold text-primary mb-2 line-clamp-2">
+                  <h3 className="text-lg font-semibold text-[rgb(var(--text-primary))] mb-2 line-clamp-2">
                     {blog.title}
                   </h3>
 
-                  <p className="text-secondary text-sm mb-4 flex-grow line-clamp-3">
+                  <p className="text-[rgb(var(--text-secondary))] text-sm mb-4 flex-grow line-clamp-3">
                     {stripToPlainText(blog.summary) || "Discover more in this article."}
                   </p>
 
                   <button
                     onClick={() => handleReadMore(blog.slug)}
-                    className="text-teal-600 font-medium hover:text-teal-700 mt-auto flex items-center gap-1"
+                    className="text-[rgb(var(--synth-blue))] font-medium hover:text-[rgb(var(--synth-blue-inactive))] mt-auto flex items-center gap-1"
                   >
                     Read More →
                   </button>
