@@ -1,7 +1,8 @@
 import { Linkedin, Instagram, Mail, Twitter } from 'lucide-react';
-import logo from '../../assets/logo.png'
+import { useTheme } from '../contexts/ThemeContext';
 
 const Footer = () => {
+  const { theme } = useTheme();
   const currentYear = new Date().getFullYear();
 
   // Footer navigation categories with links
@@ -10,15 +11,15 @@ const Footer = () => {
       { label: 'Home', href: '#home' },
       { label: 'About', href: '#about' },
       { label: 'How it Works', href: '#process' },
-     
+
     ],
     Services: [
-        { label: 'Product', href: '#product' },
+      { label: 'Product', href: '#product' },
       { label: 'Careers', href: '#careers' },
     ],
     Resources: [
       { label: 'Blog', href: '#blogs' },
-       { label: 'Contact', href: '#contact' },
+      { label: 'Contact', href: '#contact' },
     ],
     Legal: [
       { label: 'Privacy Policy', href: '#privacy' },
@@ -42,47 +43,47 @@ const Footer = () => {
           {/* Logo and description */}
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <img src={logo} alt="Syntheseed Logo" className="w-10 h-10 object-contain" />
+              <img src={theme === 'dark' ? '/logo-light.png' : '/logo-light.png'} alt="Syntheseed Logo" className="w-10 h-10 object-contain" />
               <span className="text-xl font-bold text-[rgb(var(--header-text))]">Syntheseed</span>
             </div>
             <p className="text-[rgb(var(--header-text))]/70 mb-6 leading-relaxed">
               Empowering businesses with innovative technology solutions that drive growth and transformation.
             </p>
             <div className="flex space-x-4">
-  {[
-    {
-      Icon: Linkedin,
-      url: "https://www.linkedin.com/company/syntheseed/",
-      label: "LinkedIn"
-    },
-    {
-      Icon: Instagram,
-      url: "https://www.instagram.com/syntheseed1/",
-      label: "Instagram"
-    },
-    {
-      Icon: Mail,
-      url: "mailto:info@syntheseed.com",
-      label: "Email"
-    },
-    {
-      Icon: Twitter,
-      url: "https://x.com/Syntheseed",
-      label: "Twitter"
-    }
-  ].map(({ Icon, url, label }, i) => (
-    <a
-      key={i}
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="w-10 h-10 rounded-lg bg-[rgb(var(--header-text))]/10 hover:bg-cyan-500/20 transition-all duration-300 flex items-center justify-center"
-      aria-label={label}
-    >
-      <Icon className="w-5 h-5 text-[rgb(var(--header-text))]/70 hover:text-cyan-500" />
-    </a>
-  ))}
-</div>
+              {[
+                {
+                  Icon: Linkedin,
+                  url: "https://www.linkedin.com/company/syntheseed/",
+                  label: "LinkedIn"
+                },
+                {
+                  Icon: Instagram,
+                  url: "https://www.instagram.com/syntheseed1/",
+                  label: "Instagram"
+                },
+                {
+                  Icon: Mail,
+                  url: "mailto:info@syntheseed.com",
+                  label: "Email"
+                },
+                {
+                  Icon: Twitter,
+                  url: "https://x.com/Syntheseed",
+                  label: "Twitter"
+                }
+              ].map(({ Icon, url, label }, i) => (
+                <a
+                  key={i}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-lg bg-[rgb(var(--header-text))]/10 hover:bg-cyan-500/20 transition-all duration-300 flex items-center justify-center"
+                  aria-label={label}
+                >
+                  <Icon className="w-5 h-5 text-[rgb(var(--header-text))]/70 hover:text-cyan-500" />
+                </a>
+              ))}
+            </div>
           </div>
 
           {/* Navigation Links - now 4 columns */}

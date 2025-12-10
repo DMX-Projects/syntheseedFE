@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Moon, Sun, Menu, X } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useNavigate, useLocation } from 'react-router-dom';
-import logo from '../../assets/logo.png';
+
 
 const Header = () => {
   const { theme, toggleTheme } = useTheme();
@@ -77,16 +77,15 @@ const Header = () => {
     <header className="fixed top-3 left-0 right-0 z-50">
       <div className="px-3 sm:px-4">
         <div
-          className={`mx-auto max-w-7xl rounded-xl transition-all duration-300 ${
-            isScrolled
+          className={`mx-auto max-w-7xl rounded-xl transition-all duration-300 ${isScrolled
               ? 'glass-header-scrolled py-3'
               : 'glass-header py-5'
-          } px-4 sm:px-6`}
+            } px-4 sm:px-6`}
         >
           <div className="flex items-center justify-between w-full gap-3">
             {/* Logo */}
             <div className="flex items-center space-x-2 min-w-0">
-              <img src={logo} alt="Syntheseed Logo" className="w-10 h-10 object-contain" />
+              <img src={theme === 'dark' ? '/logo-light.png' : '/logo-light.png'} alt="Syntheseed Logo" className="w-10 h-10 object-contain" />
               <span
                 className="text-xl font-bold truncate text-[rgb(var(--header-text))]"
               >
