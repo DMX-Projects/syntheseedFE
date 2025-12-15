@@ -1,13 +1,15 @@
 import ImageCarousel from './ImageCarousel';
 import { useTheme } from '../contexts/ThemeContext';
+import { useNavigate } from 'react-router-dom';
 
 const HeroSection = () => {
   const { theme } = useTheme();
+  const navigate = useNavigate();
   const isDark = theme === 'dark';
 
   // Open link in new tab
   const handleGetStarted = () => {
-    window.open('https://app.syntheseed.com/login/', '_blank');
+    navigate('/coming-soon');
   };
 
   return (

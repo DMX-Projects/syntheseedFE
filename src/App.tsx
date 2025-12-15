@@ -17,6 +17,7 @@ import AllCareersPage from "./pages/AllCareersPage";
 
 import AllBlogsPage from "./pages/AllBlogsPage";
 import BlogDetail from "./pages/BlogDetail";
+import ComingSoonPage from "./pages/ComingSoonPage";
 
 const HomePage = () => (
   <>
@@ -47,7 +48,7 @@ const HomePage = () => (
     <ProductSection />
     <FeaturesSection />
     <ProcessSection />
-    
+
     <CareersSection />
     <ContactSection />
     <BlogSection />
@@ -60,6 +61,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/coming-soon" element={<ComingSoonPage />} />
       <Route path="/blogs" element={<AllBlogsPage />} />
       <Route path="/blogs/:slug" element={<BlogDetail />} />
       <Route path="/careers/all" element={<AllCareersPage />} />
