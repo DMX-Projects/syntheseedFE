@@ -78,8 +78,8 @@ const Header = () => {
       <div className="px-3 sm:px-4">
         <div
           className={`mx-auto max-w-7xl rounded-xl transition-all duration-300 ${isScrolled
-              ? 'glass-header-scrolled py-3'
-              : 'glass-header py-5'
+            ? 'glass-header-scrolled py-3'
+            : 'glass-header py-5'
             } px-4 sm:px-6`}
         >
           <div className="flex items-center justify-between w-full gap-3">
@@ -109,15 +109,13 @@ const Header = () => {
 
             {/* Right Side Buttons */}
             <div className="flex items-center gap-3">
-              <a
-                href="https://app.syntheseed.com/login/"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => navigate('/coming-soon')}
                 className="hidden md:inline-block btn-primary"
                 style={{ minWidth: 108, textAlign: 'center' }}
               >
                 Login/Register
-              </a>
+              </button>
 
               {/* Theme Switch */}
               <button
@@ -164,14 +162,15 @@ const Header = () => {
               </button>
             ))}
             <div className="mt-3 flex gap-3">
-              <a
-                href="https://app.syntheseed.com/login/"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => {
+                  navigate('/coming-soon');
+                  setIsMobileMenuOpen(false);
+                }}
                 className="flex-1 btn-primary text-center justify-center"
               >
                 Login/Register
-              </a>
+              </button>
             </div>
           </nav>
         )}
